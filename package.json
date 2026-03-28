@@ -1,0 +1,21 @@
+{
+  "name": "asapp-shop-desktop",
+  "version": "1.0.0",
+  "description": "Repositorio de almacenamiento de la app de escritorio (open source) de Asapp-Shop",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wnvp-softwares/asapp-shop-desktop.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/wnvp-softwares/asapp-shop-desktop/issues"
+  },
+  "homepage": "https://github.com/wnvp-softwares/asapp-shop-desktop#readme"
+}
