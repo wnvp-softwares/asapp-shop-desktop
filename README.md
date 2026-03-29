@@ -24,3 +24,6 @@ PD: Se agregaron archivos "temp.txt" para evitar borrado de carpetas vacias
 <===================================================================>
 
 - 28 de marzo del 2026; 5:07 pm. Se añadio la base de datos al proyecto. Creacion del model, controller y routes de "negocio" como ejemplo de como hacerlo y se instalo los modulos. by Diego Fregoso
+
+<===================================================================>
+-28 de marzo del 2026; 9:20 pm. Creacion del model, controller y routes de "roles". by Dinora Nuño
