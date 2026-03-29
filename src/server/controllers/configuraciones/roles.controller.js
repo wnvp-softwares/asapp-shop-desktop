@@ -56,6 +56,8 @@ export const updateRol = async (req, res) => {
 // ===============================
 // ELIMINAR ROL 
 // ===============================
+
+//! A pesar de la existencia de acciones de Eliminar en los controllers, estos no deberán ser usados
 export const deleteRol = async (req, res) => {
     try {
         const { id } = req.params;
