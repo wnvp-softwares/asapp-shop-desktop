@@ -27,3 +27,6 @@ PD: Se agregaron archivos "temp.txt" para evitar borrado de carpetas vacias
 
 <===================================================================>
 -28 de marzo del 2026; 9:20 pm. Creacion del model, controller y routes de "roles". by Dinora Nuño
+
+<===================================================================>
+- 30 de marzo del 2026; 8:20 am. Se crearon models,controllers y routers de "usuarios","categorias" y "productos". by Dinora Nuño
