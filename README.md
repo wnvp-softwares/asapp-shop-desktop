@@ -30,3 +30,6 @@ PD: Se agregaron archivos "temp.txt" para evitar borrado de carpetas vacias
 
 <===================================================================>
 - 30 de marzo del 2026; 8:20 am. Se crearon models,controllers y routers de "usuarios","categorias" y "productos". by Dinora Nuño
+
+<===================================================================>
+- 31 de marzo del 2026; 4:40 pm. Se crearon models faltantes (proveedores,compras,detalle de compras,respaldos,movimientos de inventario, ventas y detalles de ventas),asi como los controllers de "proveedores y compras". by Dinora Nuño
