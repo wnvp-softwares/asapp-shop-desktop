@@ -1,61 +1,71 @@
-const Proveedores = require('../models/proveedores/Proveedores'); 
+import { Proveedor } from "../../models/proveedor.model.js";
 
-module.exports = {
-
-  // Lista de proveedores
-  getAllProveedores: async (req, res) => {
+// ===============================
+// OBTENER TODOS LOS PROVEEDORES
+// ===============================
+export const getProveedores = async (req, res) => {
     try {
-      const proveedores = await Proveedores.findAll();
-      res.json(proveedores);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Error al obtener los proveedores' });
-    }
-  },
+        const proveedores = await Proveedor.findAll();
 
-  // Proveedor por ID
-  getProveedorById: async (req, res) => {
-    const { id } = req.params;
+        if (!proveedores || proveedores.length === 0) {
+            return res.status(404).json({ message: "No hay proveedores" });
+        }
+
+        res.json(proveedores);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error al obtener proveedores" });
+    }
+};
+
+// ===============================
+// OBTENER PROVEEDOR POR ID
+// ===============================
+export const getProveedorById = async (req, res) => {
     try {
-      const proveedor = await Proveedores.findByPk(id);
-      if (!proveedor) return res.status(404).json({ message: 'Proveedor no encontrado' });
-      res.json(proveedor);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Error al obtener el proveedor' });
-    }
-  },
+        const { id } = req.params;
+        const proveedor = await Proveedor.findOne({ where: { id_proveedor: id } });
 
-  // Crear proveedor
-  createProveedor: async (req, res) => {
-    const { nombre, telefono, correo } = req.body;
+        if (!proveedor) {
+            return res.status(404).json({ message: "Proveedor no encontrado" });
+        }
+
+        res.json(proveedor);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error al obtener el proveedor" });
+    }
+};
+
+// ===============================
+// CREAR PROVEEDOR
+// ===============================
+export const createProveedor = async (req, res) => {
     try {
-      const nuevoProveedor = await Proveedores.create({ nombre, telefono, correo });
-      res.status(201).json(nuevoProveedor);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Error al crear el proveedor' });
-    }
-  },
+        const data = req.body;
 
-  // Actualizar un proveedor
-  updateProveedor: async (req, res) => {
-    const { id } = req.params;
-    const { nombre, telefono, correo } = req.body;
+        await Proveedor.create(data);
+
+        res.json({ message: "Proveedor creado" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error al crear proveedor" });
+    }
+};
+
+// ===============================
+// ACTUALIZAR PROVEEDOR
+// ===============================
+export const updateProveedor = async (req, res) => {
     try {
-      const proveedor = await Proveedores.findByPk(id);
-      if (!proveedor) return res.status(404).json({ message: 'Proveedor no encontrado' });
+        const { id } = req.params;
+        const data = req.body;
 
-      proveedor.nombre = nombre ?? proveedor.nombre;
-      proveedor.telefono = telefono ?? proveedor.telefono;
-      proveedor.correo = correo ?? proveedor.correo;
-      await proveedor.save();
+        await Proveedor.update(data, { where: { id_proveedor: id } });
 
-      res.json(proveedor);
+        res.json({ message: "Proveedor actualizado" });
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Error al actualizar el proveedor' });
+        console.error(error);
+        res.status(500).json({ message: "Error al actualizar proveedor" });
     }
-  },
-
 };

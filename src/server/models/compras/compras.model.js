@@ -13,7 +13,6 @@ export const Compra = database.define(
 
          id_proveedor: {
             type: DataTypes.INTEGER,
-            allowNull: false
         },
 
           fecha: {
@@ -25,7 +24,6 @@ export const Compra = database.define(
             type: DataTypes.DECIMAL(10, 2),
             allowNull: false
         }
-
     },
     {
         tableName: "compras",
@@ -33,3 +31,14 @@ export const Compra = database.define(
         timestamps: false
     }
 );
+import { Proveedor } from "./Proveedor.js";
+
+Compra.belongsTo(Proveedor, {
+    foreignKey: "id_proveedor",
+    as: "proveedor"
+});
+
+Proveedor.hasMany(Compra, {
+    foreignKey: "id_proveedor",
+    as: "compras"
+});

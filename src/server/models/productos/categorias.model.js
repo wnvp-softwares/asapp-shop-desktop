@@ -1,5 +1,9 @@
-export default (sequelize, DataTypes) => {
-    const Categoria = sequelize.define('Categoria', {
+import { DataTypes } from "sequelize";
+import { database } from "../../configs/database.js";
+
+export const Categoria = database.define(
+    "Categoria",
+    {
         id_categoria: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -12,8 +16,6 @@ export default (sequelize, DataTypes) => {
     }, 
     {
         tableName: 'categorias',
+        frezeeTableName: true,
         timestamps: false
     });
-
-    return Categoria;
-};

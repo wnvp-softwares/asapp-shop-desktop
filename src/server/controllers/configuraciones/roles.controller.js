@@ -52,23 +52,3 @@ export const updateRol = async (req, res) => {
         res.status(500).json({ message: "Error al actualizar rol" });
     }
 };
-
-// ===============================
-// ELIMINAR ROL 
-// ===============================
-
-//! A pesar de la existencia de acciones de Eliminar en los controllers, estos no deberán ser usados
-export const deleteRol = async (req, res) => {
-    try {
-        const { id } = req.params;
-
-        await Rol.destroy({
-            where: { id_rol: id }
-        });
-
-        res.json({ message: "Rol eliminado" });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Error al eliminar rol" });
-    }
-};

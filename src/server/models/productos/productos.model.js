@@ -1,32 +1,29 @@
-const { DataTypes } = require('sequelize');
-const db = require('../config/database');
-const Categoria = require('./Categoria'); 
 
-const Producto = db.define('Producto', {
+import { DataTypes } from "sequelize";
+import { database } from "../../configs/database.js";
+
+export const Producto = database.define(
+    "Producto",
+    {
     id_producto: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
     codigo_barras: {
-        type: DataTypes.STRING(50),
+        type: DataTypes.STRING,
         unique: true,
         allowNull: false
     },
     nombre: {
-        type: DataTypes.STRING(150),
+        type: DataTypes.STRING,
         allowNull: false
     },
     imagen: {
-        type: DataTypes.STRING(255),
-        allowNull: true
+        type: DataTypes.STRING,
     },
     id_categoria: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: Categoria,
-            key: 'id_categoria'
-        }
+        type: DataTypes.INTEGER
     },
     precio: {
         type: DataTypes.DECIMAL(10, 2),
@@ -48,9 +45,18 @@ const Producto = db.define('Producto', {
     }
 }, {
     tableName: 'productos',
+    frezeeTableName,
     timestamps: false
 });
 
-Producto.belongsTo(Categoria, { foreignKey: 'id_categoria', as: 'categoria' });
+import { Categoria } from "./Categoria.js";
 
-module.exports = Producto;
+Producto.belongsTo(Categoria, {
+    foreignKey: "id_categoria",
+    as: "categoria"
+});
+
+Categoria.hasMany(Producto, {
+    foreignKey: "id_categoria",
+    as: "productos"
+});

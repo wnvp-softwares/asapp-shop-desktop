@@ -1,8 +1,10 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../../config/database'); 
+import { DataTypes } from "sequelize";
+import { database } from "../../configs/database.js";
 
-const Respaldos = sequelize.define('Respaldos', {
-  id_respaldo: {
+export const Respaldo = database.define(
+    "Respaldo",
+  {
+     id_respaldo: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true
@@ -12,12 +14,10 @@ const Respaldos = sequelize.define('Respaldos', {
     defaultValue: DataTypes.NOW
   },
   ruta_archivo: {
-    type: DataTypes.STRING(255),
-    allowNull: false
+    type: DataTypes.STRING,
   }
 }, {
   tableName: 'respaldos',
-  timestamps: false
+  freezeTableName: true,
+  timestamps: false 
 });
-
-module.exports = Respaldos;

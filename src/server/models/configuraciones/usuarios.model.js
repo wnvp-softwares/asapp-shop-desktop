@@ -1,6 +1,10 @@
-module.exports = (sequelize, DataTypes) => {
-  const Usuario = sequelize.define('Usuario', {
-    id_usuario: {
+import { DataTypes } from "sequelize";
+import { database } from "../../configs/database.js";
+
+export const Usuario = database.define(
+    "Usuario",
+    {
+      id_usuario: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true
@@ -26,17 +30,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: true
     }
-  }, {
+  },
+ {
     tableName: 'usuarios',
+    freezeTableName: true,
     timestamps: false
   });
-
-  Usuario.associate = (models) => {
-    Usuario.belongsTo(models.Rol, {
-      foreignKey: 'id_rol',
-      as: 'rol'
-    });
-  };
-
-  return Usuario;
-};

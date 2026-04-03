@@ -1,9 +1,10 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../../config/database'); 
-const Producto = require('../productos/Producto'); 
+import { DataTypes } from "sequelize";
+import { database } from "../../configs/database.js";
 
-const MovimientosInventario = sequelize.define('MovimientosInventario', {
-  id_movimiento: {
+export const MovimientoInventario = database.define(
+    "MovimientoInventario",
+  {
+    id_movimiento: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true
@@ -11,10 +12,6 @@ const MovimientosInventario = sequelize.define('MovimientosInventario', {
   id_producto: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    references: {
-      model: Producto,
-      key: 'id_producto'
-    }
   },
   tipo: {
     type: DataTypes.ENUM('entrada','salida','ajuste'),
@@ -29,16 +26,24 @@ const MovimientosInventario = sequelize.define('MovimientosInventario', {
     defaultValue: DataTypes.NOW
   },
   referencia: {
-    type: DataTypes.STRING(100),
-    allowNull: true
-  }
+    type: DataTypes.STRING,
+    }
 },
- {
+{
   tableName: 'movimientos_inventario',
+  freezeTableName: true,
   timestamps: false
+}
+);
+
+import { Producto } from "./Producto.js";
+
+MovimientoInventario.belongsTo(Producto, {
+    foreignKey: "id_producto",
+    as: "producto"
 });
 
-
-MovimientosInventario.belongsTo(Producto, { foreignKey: 'id_producto' });
-
-module.exports = MovimientosInventario;
+Producto.hasMany(MovimientoInventario, {
+    foreignKey: "id_producto",
+    as: "movimientos"
+});

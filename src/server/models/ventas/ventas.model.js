@@ -1,9 +1,10 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../../config/database'); 
-const Usuario = require('../usuarios/Usuario'); 
+import { DataTypes } from "sequelize";
+import { database } from "../../configs/database.js";
 
-const Venta = sequelize.define('Venta', {
-  id_venta: {
+export const Venta = database.define(
+    "Venta",
+ {
+    id_venta: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
@@ -11,10 +12,6 @@ const Venta = sequelize.define('Venta', {
   id_usuario: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    references: {
-      model: Usuario,
-      key: 'id_usuario'
-    }
   },
   fecha: {
     type: DataTypes.DATE,
@@ -26,11 +23,9 @@ const Venta = sequelize.define('Venta', {
   },
   pago_con: {
     type: DataTypes.DECIMAL(10,2),
-    allowNull: true
   },
   cambio: {
     type: DataTypes.DECIMAL(10,2),
-    allowNull: true
   },
   descuento: {
     type: DataTypes.DECIMAL(10,2),
@@ -42,9 +37,18 @@ const Venta = sequelize.define('Venta', {
   }
 }, {
   tableName: 'ventas',
+  freezeTableName: true,
   timestamps: false
 });
 
-Venta.belongsTo(Usuario, { foreignKey: 'id_usuario' });
+import { Usuario } from "./Usuario.js";
 
-module.exports = Venta;
+Venta.belongsTo(Usuario, {
+    foreignKey: "id_usuario",
+    as: "usuario"
+});
+
+Usuario.hasMany(Venta, {
+    foreignKey: "id_usuario",
+    as: "ventas"
+});

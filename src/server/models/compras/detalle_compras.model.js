@@ -1,10 +1,10 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database'); 
-const Compra = require('./Compra');
-const Producto = require('./Producto');
+import { DataTypes } from "sequelize";
+import { database } from "../../configs/database.js";
 
-const DetalleCompra = sequelize.define('DetalleCompra', {
-  id_detalle: {
+export const DetalleCompra = database.define(
+    "DetalleCompra",
+    {
+     id_detalle: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
@@ -12,18 +12,10 @@ const DetalleCompra = sequelize.define('DetalleCompra', {
   id_compra: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    references: {
-      model: Compra,
-      key: 'id_compra'
-    }
   },
   id_producto: {
     type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: Producto,
-      key: 'id_producto'
-    }
+    allowNull: false
   },
   cantidad: {
     type: DataTypes.INTEGER,
@@ -33,12 +25,32 @@ const DetalleCompra = sequelize.define('DetalleCompra', {
     type: DataTypes.DECIMAL(10,2),
     allowNull: false,
   }
-}, {
+},
+ {
   tableName: 'detalle_compras',
+  freezeTableName: true,
   timestamps: false
 });
 
-DetalleCompra.belongsTo(Compra, { foreignKey: 'id_compra' });
-DetalleCompra.belongsTo(Producto, { foreignKey: 'id_producto' });
+import { Compra } from "./Compra.js";
+import { Producto } from "./Producto.js";
 
-module.exports = DetalleCompra;
+DetalleCompra.belongsTo(Compra, {
+    foreignKey: "id_compra",
+    as: "compra"
+});
+
+DetalleCompra.belongsTo(Producto, {
+    foreignKey: "id_producto",
+    as: "producto"
+});
+
+Compra.hasMany(DetalleCompra, {
+    foreignKey: "id_compra",
+    as: "detalles"
+});
+
+Producto.hasMany(DetalleCompra, {
+    foreignKey: "id_producto",
+    as: "detalles_compra"
+});

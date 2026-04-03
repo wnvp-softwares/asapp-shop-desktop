@@ -1,76 +1,73 @@
-const { Usuario } = require('../models');
-const bcrypt = require('bcrypt');
+import { Usuario } from "../../models/usuario.model.js";
+import { Rol } from "../../models/rol.model.js";
+import bcrypt from "bcrypt";
 
-// Obtener todos
-exports.getUsuarios = async (req, res) => {
-  const usuarios = await Usuario.findAll({ include: 'rol' });
-  res.json(usuarios);
+// ===============================
+// OBTENER TODOS LOS USUARIOS
+// ===============================
+export const getUsuarios = async (req, res) => {
+    try {
+        const usuarios = await Usuario.findAll({
+            include: {
+                model: Rol,
+                as: "rol"
+            }
+        });
+
+        if (!usuarios || usuarios.length === 0) {
+            return res.status(404).json({ message: "No hay usuarios" });
+        }
+
+        res.json(usuarios);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error al obtener usuarios" });
+    }
 };
 
-// Crear usuario
-exports.createUsuario = async (req, res) => {
-  try {
-    const data = req.body;
+// ===============================
+// OBTENER USUARIO POR ID
+// ===============================
+export const getUsuarioById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const usuario = await Usuario.findOne({
+            where: { id_usuario: id },
+            include: { model: Rol, as: "rol" }
+        });
 
-    data.pass = await bcrypt.hash(data.pass, 10);
+        if (!usuario) {
+            return res.status(404).json({ message: "Usuario no encontrado" });
+        }
 
-    const usuario = await Usuario.create(data);
-    res.status(201).json(usuario);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
+        res.json(usuario);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error al obtener el usuario" });
+    }
 };
 
-// Obtener uno
-exports.getUsuario = async (req, res) => {
-  const usuario = await Usuario.findByPk(req.params.id, { include: 'rol' });
+// ===============================
+// CREAR USUARIO
+// ===============================
+export const createUsuario = async (req, res) => {
+    try {
+        const { nombre_completo, usuario, pass, id_rol, activo } = req.body;
 
-  if (!usuario) {
-    return res.status(404).json({ error: 'No encontrado' });
-  }
+        // Encriptar contraseña
+        const hashedPass = await bcrypt.hash(pass, 10);
 
-  res.json(usuario);
-};
+        await Usuario.create({
+            nombre_completo,
+            usuario,
+            pass: hashedPass,
+            id_rol,
+            activo
+        });
 
-// Actualizar
-exports.updateUsuario = async (req, res) => {
-  const usuario = await Usuario.findByPk(req.params.id);
-
-  if (!usuario) {
-    return res.status(404).json({ error: 'No encontrado' });
-  }
-
-  const data = req.body;
-
-  if (data.pass) {
-    data.pass = await bcrypt.hash(data.pass, 10);
-  }
-
-  await usuario.update(data);
-  res.json(usuario);
-};
-
-// Eliminar
-exports.deleteUsuario = async (req, res) => {
-  await Usuario.destroy({ where: { id_usuario: req.params.id } });
-  res.json({ mensaje: 'Usuario eliminado' });
-};
-
-// Login
-exports.login = async (req, res) => {
-  const { usuario, pass } = req.body;
-
-  const user = await Usuario.findOne({ where: { usuario } });
-
-  if (!user) {
-    return res.status(401).json({ error: 'Credenciales incorrectas' });
-  }
-
-  const valid = await bcrypt.compare(pass, user.pass);
-
-  if (!valid) {
-    return res.status(401).json({ error: 'Credenciales incorrectas' });
-  }
-
-  res.json(user);
+        res.json({ message: "Usuario creado" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error al crear usuario" });
+    }
 };
