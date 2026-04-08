@@ -1,0 +1,58 @@
+<div class="tarjeta_seccion h-100 p-4 p-md-5 d-flex flex-column overflow-hidden">
+
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+        <h4 class="fw-bold text-dark mb-0">Compras</h4>
+
+        <div class="d-flex gap-3 align-items-center">
+            <div class="barra_busqueda_ventas input-group" style="width: 260px;">
+                <span class="input-group-text bg-transparent border-0 text-muted ps-3">
+                    <i class="bi bi-search"></i>
+                </span>
+                <input type="text" class="form-control border-0 shadow-none" placeholder="Buscar por ID o proveedor...">
+            </div>
+
+            <button class="btn boton_primario px-3 px-md-4 fw-medium d-flex align-items-center text-nowrap">
+                <i class="bi bi-plus-lg me-2"></i> Nueva Compra
+            </button>
+        </div>
+    </div>
+
+    <div class="contenedor_tabla_compras table-responsive flex-grow-1 mb-2">
+        <table class="table tabla_compras align-middle">
+            <thead>
+                <tr>
+                    <th class="ps-4">ID COMPRA</th>
+                    <th>PROVEEDOR</th>
+                    <th>FECHA</th>
+                    <th>TOTAL</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="fila_compra">
+                    <td class="id_compra_texto ps-4">COMP-001</td>
+                    <td class="fw-medium text-dark">Coca-Cola FEMSA</td>
+                    <td class="text-secondary">2023-10-25</td>
+                    <td class="fw-bold text-dark">$1540.50</td>
+                    <td class="text-end pe-4 text-secondary"><i class="bi bi-chevron-right"></i></td>
+                </tr>
+
+                <tr class="fila_compra">
+                    <td class="id_compra_texto ps-4">COMP-002</td>
+                    <td class="fw-medium text-dark">Sabritas S.A. de C.V.</td>
+                    <td class="text-secondary">2023-10-24</td>
+                    <td class="fw-bold text-dark">$850.00</td>
+                    <td class="text-end pe-4 text-secondary"><i class="bi bi-chevron-right"></i></td>
+                </tr>
+
+                <tr class="fila_compra">
+                    <td class="id_compra_texto ps-4">COMP-003</td>
+                    <td class="fw-medium text-dark">Nestlé</td>
+                    <td class="text-secondary">2023-10-20</td>
+                    <td class="fw-bold text-dark">$1200.75</td>
+                    <td class="text-end pe-4 text-secondary"><i class="bi bi-chevron-right"></i></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

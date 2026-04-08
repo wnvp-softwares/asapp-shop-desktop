@@ -1,0 +1,99 @@
+<div class="tarjeta_seccion h-100 p-4 p-md-5 d-flex flex-column overflow-hidden">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="fw-bold text-dark mb-0">Catálogo de Productos</h4>
+        <button class="btn boton_primario px-3 px-md-4 fw-medium d-flex align-items-center">
+            <i class="bi bi-plus-lg me-2"></i> Agregar Producto
+        </button>
+    </div>
+
+    <div class="d-flex flex-column flex-md-row gap-3 mb-4">
+        <div class="barra_busqueda_ventas input-group flex-grow-1">
+            <span class="input-group-text bg-transparent border-0 text-muted ps-3">
+                <i class="bi bi-search"></i>
+            </span>
+            <input type="text" class="form-control border-0 shadow-none" placeholder="Buscar por nombre o código...">
+        </div>
+
+        <button class="btn boton_filtro bg-white d-flex align-items-center text-dark">
+            <i class="bi bi-funnel me-2 text-muted"></i> Todos los estados
+        </button>
+    </div>
+
+    <div class="table-responsive flex-grow-1 pr-2">
+        <table class="table tabla_productos align-middle border-transparent">
+            <thead>
+                <tr>
+                    <th class="ps-3">CÓDIGO</th>
+                    <th>NOMBRE</th>
+                    <th>CATEGORÍA</th>
+                    <th>PRECIO</th>
+                    <th>STOCK</th>
+                    <th>ESTADO</th>
+                    <th class="text-end pe-3">ACCIONES</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-secondary ps-3">75010000001</td>
+                    <td class="fw-medium text-dark">Refresco de Cola 600ml</td>
+                    <td><span class="pildora_categoria_tabla">Bebidas</span></td>
+                    <td class="fw-bold text-dark">$18.00</td>
+                    <td class="fw-medium text-dark">50</td>
+                    <td><span class="pildora_estado activo">Activo</span></td>
+                    <td class="text-end pe-3">
+                        <button class="btn btn-sm text-secondary boton_accion" title="Editar"><i
+                                class="bi bi-pencil"></i></button>
+                        <button class="btn btn-sm text-secondary boton_accion" title="Eliminar"><i
+                                class="bi bi-trash"></i></button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="text-secondary ps-3">75010000002</td>
+                    <td class="fw-medium text-dark">Agua Natural 1L</td>
+                    <td><span class="pildora_categoria_tabla">Bebidas</span></td>
+                    <td class="fw-bold text-dark">$15.00</td>
+                    <td class="fw-medium text-dark">30</td>
+                    <td><span class="pildora_estado activo">Activo</span></td>
+                    <td class="text-end pe-3">
+                        <button class="btn btn-sm text-secondary boton_accion" title="Editar"><i
+                                class="bi bi-pencil"></i></button>
+                        <button class="btn btn-sm text-secondary boton_accion" title="Eliminar"><i
+                                class="bi bi-trash"></i></button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="text-secondary ps-3">75010000003</td>
+                    <td class="fw-medium text-dark">Papas Fritas 170g</td>
+                    <td><span class="pildora_categoria_tabla">Botanas</span></td>
+                    <td class="fw-bold text-dark">$25.00</td>
+                    <td class="fw-bold stock_bajo">2 <span class="punto_rojo"></span></td>
+                    <td><span class="pildora_estado activo">Activo</span></td>
+                    <td class="text-end pe-3">
+                        <button class="btn btn-sm text-secondary boton_accion" title="Editar"><i
+                                class="bi bi-pencil"></i></button>
+                        <button class="btn btn-sm text-secondary boton_accion" title="Eliminar"><i
+                                class="bi bi-trash"></i></button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="text-secondary ps-3">75010000004</td>
+                    <td class="fw-medium text-dark">Barra de Chocolate</td>
+                    <td><span class="pildora_categoria_tabla">Dulces</span></td>
+                    <td class="fw-bold text-dark">$20.00</td>
+                    <td class="fw-bold stock_bajo">0 <span class="punto_rojo"></span></td>
+                    <td><span class="pildora_estado inactivo">Inactivo</span></td>
+                    <td class="text-end pe-3">
+                        <button class="btn btn-sm text-secondary boton_accion" title="Editar"><i
+                                class="bi bi-pencil"></i></button>
+                        <button class="btn btn-sm text-secondary boton_accion" title="Eliminar"><i
+                                class="bi bi-trash"></i></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

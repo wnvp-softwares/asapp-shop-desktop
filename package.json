@@ -2,8 +2,9 @@
   "name": "asapp-shop-desktop",
   "version": "1.0.0",
   "description": "Repositorio de almacenamiento de la app de escritorio (open source) de Asapp-Shop",
-  "main": "index.js",
+  "main": "src/main/main.js",
   "scripts": {
+    "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,6 +21,9 @@
   "homepage": "https://github.com/wnvp-softwares/asapp-shop-desktop#readme",
   "dependencies": {
     "bcryptjs": "^3.0.3",
+    "bootstrap": "^5.3.8",
+    "bootstrap-icons": "^1.13.1",
+    "chart.js": "^4.5.1",
     "cors": "^2.8.6",
     "dotenv": "^17.3.1",
     "electron": "^41.1.0",

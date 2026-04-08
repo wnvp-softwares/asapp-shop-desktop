@@ -1,0 +1,107 @@
+<div class="h-100 p-4 p-md-5 overflow-auto">
+
+    <div class="mb-4">
+        <h4 class="fw-bold text-dark mb-0">Reportes y Estadísticas</h4>
+    </div>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-4 g-4 mb-4">
+
+        <div class="col">
+            <div class="tarjeta_reporte p-4 h-100 d-flex flex-column justify-content-between">
+                <div class="d-flex justify-content-between align-items-start">
+                    <span class="text-secondary fw-medium" style="font-size: 0.9rem;">Ventas del Día</span>
+                    <div class="icono_kpi verde"><i class="bi bi-currency-dollar"></i></div>
+                </div>
+                <div>
+                    <h3 class="texto_kpi_valor">$4,520.00</h3>
+                    <div class="d-flex align-items-center">
+                        <span class="tendencia_positiva me-2"><i class="bi bi-graph-up-arrow me-1"></i> +12.5%</span>
+                        <span class="texto_kpi_secundario">vs ayer</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="tarjeta_reporte p-4 h-100 d-flex flex-column justify-content-between">
+                <div class="d-flex justify-content-between align-items-start">
+                    <span class="text-secondary fw-medium" style="font-size: 0.9rem;">Ventas del Mes</span>
+                    <div class="icono_kpi azul"><i class="bi bi-activity"></i></div>
+                </div>
+                <div>
+                    <h3 class="texto_kpi_valor">$124,500.00</h3>
+                    <div class="d-flex align-items-center">
+                        <span class="tendencia_positiva me-2"><i class="bi bi-graph-up-arrow me-1"></i> +8.2%</span>
+                        <span class="texto_kpi_secundario">vs mes anterior</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="tarjeta_reporte p-4 h-100 d-flex flex-column justify-content-between">
+                <div class="d-flex justify-content-between align-items-start">
+                    <span class="text-secondary fw-medium" style="font-size: 0.9rem;">Productos Vendidos</span>
+                    <div class="icono_kpi morado"><i class="bi bi-box-seam"></i></div>
+                </div>
+                <div>
+                    <h3 class="texto_kpi_valor">842</h3>
+                    <div class="d-flex align-items-center">
+                        <span class="texto_kpi_secundario">En los últimos 7 días</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="tarjeta_reporte p-4 h-100 d-flex flex-column justify-content-between">
+                <div class="d-flex justify-content-between align-items-start">
+                    <span class="text-secondary fw-medium" style="font-size: 0.9rem;">Ingresos Totales</span>
+                    <div class="icono_kpi naranja"><i class="bi bi-currency-dollar"></i></div>
+                </div>
+                <div>
+                    <h3 class="texto_kpi_valor">$458,920.00</h3>
+                    <div class="d-flex align-items-center">
+                        <span class="texto_kpi_secundario">Año en curso</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row g-4 mb-4">
+
+        <div class="col-12 col-xl-7">
+            <div class="tarjeta_reporte p-4 h-100 d-flex flex-column">
+                <h6 class="fw-bold text-dark mb-4">Ventas de la Semana</h6>
+                <div class="contenedor_canvas flex-grow-1 position-relative" style="min-height: 300px;">
+                    <canvas id="graficaVentasSemana"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-xl-5">
+            <div class="tarjeta_reporte p-4 h-100 d-flex flex-column">
+                <h6 class="fw-bold text-dark mb-4">Ventas por Categoría</h6>
+                <div class="contenedor_canvas flex-grow-1 position-relative d-flex justify-content-center align-items-center"
+                    style="min-height: 300px;">
+                    <canvas id="graficaCategorias"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row g-4 pb-4">
+        <div class="col-12">
+            <div class="tarjeta_reporte p-4">
+                <h6 class="fw-bold text-dark mb-4">Actividad por Hora (Ventas)</h6>
+                <div class="contenedor_canvas position-relative" style="height: 300px;">
+                    <canvas id="graficaActividad"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

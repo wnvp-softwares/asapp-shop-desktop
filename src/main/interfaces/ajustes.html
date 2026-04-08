@@ -1,0 +1,171 @@
+<div class="h-100 p-4 p-md-5 overflow-auto">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="fw-bold text-dark mb-0">Ajustes del Sistema</h4>
+        <button class="btn boton_primario px-4 fw-medium d-flex align-items-center">
+            <i class="bi bi-save me-2"></i> Guardar Cambios
+        </button>
+    </div>
+
+    <div class="row g-4 pb-4">
+
+        <div class="col-12 col-xl-7">
+            <div class="tarjeta_ajustes p-4 h-100">
+
+                <div class="d-flex align-items-center mb-4">
+                    <i class="bi bi-shop fs-5 text-success me-2"></i>
+                    <h5 class="fw-bold text-dark mb-0">Datos del Negocio</h5>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-12 col-md-5">
+                        <div
+                            class="zona_subir_logo d-flex flex-column align-items-center justify-content-center p-4 text-center cursor-pointer h-100">
+                            <div class="icono_upload bg-white shadow-sm rounded-circle mb-3 d-flex align-items-center justify-content-center text-secondary"
+                                style="width: 55px; height: 55px;">
+                                <i class="bi bi-shop fs-4"></i>
+                            </div>
+                            <span class="fw-medium text-dark">Subir Logo</span>
+                            <small class="text-muted mt-1">PNG, JPG hasta 2MB</small>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-7 d-flex flex-column gap-3">
+                        <div>
+                            <label class="form-label text-dark fw-medium small mb-1">Nombre Comercial</label>
+                            <div class="input-group input_ajustes">
+                                <span class="input-group-text bg-transparent border-end-0 text-muted"><i
+                                        class="bi bi-shop-window"></i></span>
+                                <input type="text" class="form-control border-start-0 ps-0 shadow-none"
+                                    value="Mi Negocio POS">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="form-label text-dark fw-medium small mb-1">RFC (Opcional)</label>
+                            <div class="input-group input_ajustes">
+                                <span class="input-group-text bg-transparent border-end-0 text-muted"><i
+                                        class="bi bi-file-earmark-text"></i></span>
+                                <input type="text" class="form-control border-start-0 ps-0 shadow-none"
+                                    placeholder="EJ. XAXX010101000">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label text-dark fw-medium small mb-1">Dirección Física</label>
+                        <div class="input-group input_ajustes">
+                            <span class="input-group-text bg-transparent border-end-0 text-muted"><i
+                                    class="bi bi-geo-alt"></i></span>
+                            <input type="text" class="form-control border-start-0 ps-0 shadow-none"
+                                value="Av. Principal 123, Centro, 00000 Ciudad, Estado">
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <label class="form-label text-dark fw-medium small mb-1">Teléfono</label>
+                        <div class="input-group input_ajustes">
+                            <span class="input-group-text bg-transparent border-end-0 text-muted"><i
+                                    class="bi bi-phone"></i></span>
+                            <input type="text" class="form-control border-start-0 ps-0 shadow-none"
+                                value="555-0123-456">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-12 col-xl-5 d-flex flex-column gap-4">
+
+            <div class="tarjeta_ajustes p-4">
+                <div class="d-flex align-items-center mb-4">
+                    <i class="bi bi-gear fs-5 text-success me-2"></i>
+                    <h5 class="fw-bold text-dark mb-0">Configuración General</h5>
+                </div>
+
+                <div class="d-flex flex-column gap-4">
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <p class="fw-medium text-dark mb-0">Moneda Principal</p>
+                            <small class="text-muted">MXN ($)</small>
+                        </div>
+                        <select class="form-select select_ajustes w-auto shadow-none fw-medium">
+                            <option value="MXN" selected>MXN</option>
+                            <option value="USD">USD</option>
+                            <option value="EUR">EUR</option>
+                        </select>
+                    </div>
+
+                    <hr class="m-0 border-light">
+
+                    <div>
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <p class="fw-medium text-dark mb-0">IP de Impresora Térmica</p>
+                            <input type="text" class="form-control shadow-none input_ip text-center fw-medium"
+                                placeholder="192.168.1.100" style="max-width: 140px;">
+                        </div>
+                        <small class="text-muted">Ingresa la dirección IPv4 local para imprimir tickets por red.</small>
+                    </div>
+
+                    <hr class="m-0 border-light">
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="pe-3">
+                            <p class="fw-medium text-dark mb-0">Paleta de Colores</p>
+                            <small class="text-muted">Cambia el color verde por defecto al tono de tu marca.</small>
+                        </div>
+                        <input type="color" class="form-control form-control-color input_color shadow-none"
+                            value="#00a86b" title="Elige tu color">
+                    </div>
+
+                    <hr class="m-0 border-light">
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="pe-3">
+                            <p class="fw-medium text-dark mb-0">Modo Oscuro</p>
+                            <small class="text-muted">Activa la interfaz oscura para descansar la vista y ahorrar
+                                energía.</small>
+                        </div>
+                        <div class="form-check form-switch fs-4 mb-0">
+                            <input class="form-check-input switch_ajustes shadow-none cursor-pointer" type="checkbox"
+                                role="switch">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="tarjeta_ajustes p-4">
+                <div class="d-flex align-items-center mb-3">
+                    <i class="bi bi-database fs-5 text-primary me-2"></i>
+                    <h5 class="fw-bold text-dark mb-0">Base de Datos</h5>
+                </div>
+
+                <div class="mb-4">
+                    <p class="text-muted mb-3" style="font-size: 0.9rem;">Crea una copia de seguridad local de todos tus
+                        productos, ventas y configuraciones.</p>
+                    <button
+                        class="btn w-100 fw-medium d-flex justify-content-center align-items-center py-2 mb-2 btn_respaldo">
+                        <i class="bi bi-upload me-2"></i> Generar Respaldo Local
+                    </button>
+                    <div class="text-center">
+                        <small class="text-muted">Último respaldo: Hoy 09:30 AM</small>
+                    </div>
+                </div>
+
+                <hr class="border-light mb-4">
+
+                <div>
+                    <p class="text-muted mb-3" style="font-size: 0.9rem;">Restaura la información de tu sistema desde un
+                        archivo de respaldo previo (.sql).</p>
+                    <button
+                        class="btn w-100 fw-medium d-flex justify-content-center align-items-center py-2 btn_importar">
+                        <i class="bi bi-download me-2"></i> Importar un Respaldo
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -35,3 +35,5 @@ PD: Se agregaron archivos "temp.txt" para evitar borrado de carpetas vacias
 - 31 de marzo del 2026; 4:40 pm. Se crearon models faltantes (proveedores,compras,detalle de compras,respaldos,movimientos de inventario, ventas y detalles de ventas),asi como los controllers de "proveedores y compras". by Dinora Nuño
 <===================================================================>
 - 03 de abril del 2026; 5:30 pm. Se crearon los models,controllers y routes faltantes. by Dinora Nuño
+<===================================================================>
+- 07 de abril del 2026; 10:20 pm. Se diseñaron las ventanas principales del software

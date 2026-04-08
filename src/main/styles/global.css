@@ -1,0 +1,673 @@
+/* =========================================
+   VARIABLES GLOBALES
+   ========================================= */
+:root {
+    --color-primario: #00a86b;
+    --color-primario-hover: #008f5a;
+    --color-fondo-icono: #eef9f4;
+    --color-fondo-pagina: #f4f6f8;
+    --color-fondo-input: #fafafa;
+    --color-borde-input: #e4e4e4;
+    --color-texto-principal: #1f2937;
+    --color-texto-secundario: #6b7280;
+
+    /* Variables de estructura */
+    --radio-borde-tarjeta: 12px;
+    --radio-borde-elementos: 8px;
+    --sombra-tarjeta: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+
+    /* Variables del Dashboard */
+    --ancho-menu-lateral: 250px;
+
+    --fuente-principal: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Configuraciones Base */
+body {
+    font-family: var(--fuente-principal);
+    color: var(--color-texto-principal);
+    margin: 0;
+    padding: 0;
+}
+
+.fondo_principal {
+    background-color: var(--color-fondo-pagina);
+}
+
+
+/* =========================================
+   VENTANA: LOGIN
+   ========================================= */
+.tarjeta_login {
+    width: 100%;
+    max-width: 420px;
+    border-radius: var(--radio-borde-tarjeta) !important;
+    box-shadow: var(--sombra-tarjeta) !important;
+    background-color: #ffffff;
+}
+
+.contenedor_icono {
+    width: 64px;
+    height: 64px;
+    background-color: var(--color-fondo-icono);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icono_tienda {
+    font-size: 28px;
+    color: var(--color-primario);
+}
+
+.titulo_login {
+    color: var(--color-texto-principal);
+    letter-spacing: -0.5px;
+}
+
+.subtitulo_login {
+    font-size: 0.9rem;
+    color: var(--color-texto-secundario);
+}
+
+.etiqueta_formulario {
+    font-size: 0.85rem;
+    color: var(--color-texto-principal);
+}
+
+.campo_entrada {
+    background-color: var(--color-fondo-input) !important;
+    border: 1px solid var(--color-borde-input) !important;
+    border-radius: var(--radio-borde-elementos) !important;
+    padding: 12px 16px !important;
+    font-size: 0.95rem !important;
+    box-shadow: none !important;
+    transition: all 0.2s ease;
+}
+
+.campo_entrada:focus {
+    border-color: var(--color-primario) !important;
+    background-color: #ffffff !important;
+}
+
+.campo_entrada::placeholder {
+    color: #b3b3b3;
+}
+
+.boton_primario {
+    background-color: var(--color-primario) !important;
+    color: #ffffff !important;
+    border-radius: var(--radio-borde-elementos) !important;
+    border: none !important;
+    transition: background-color 0.2s ease;
+}
+
+.boton_primario:hover {
+    background-color: var(--color-primario-hover) !important;
+}
+
+
+/* =========================================
+   VENTANA: DASHBOARD (CASCARÓN)
+   ========================================= */
+.menu_lateral {
+    width: var(--ancho-menu-lateral);
+    min-width: var(--ancho-menu-lateral);
+    height: 100vh;
+    z-index: 1000;
+}
+
+.icono_logo {
+    width: 38px;
+    height: 38px;
+    background-color: var(--color-fondo-icono);
+}
+
+.navegacion_principal .nav-link {
+    padding: 12px 16px;
+    border-radius: var(--radio-borde-elementos);
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    margin-bottom: 4px;
+}
+
+.navegacion_principal .nav-link:hover {
+    background-color: #f8f9fa;
+    color: var(--color-texto-principal) !important;
+}
+
+.navegacion_principal .nav-link.activo {
+    background-color: var(--color-fondo-icono);
+    color: var(--color-primario) !important;
+}
+
+.avatar_usuario {
+    width: 36px;
+    height: 36px;
+}
+
+.boton_salir {
+    transition: all 0.2s ease;
+}
+
+.boton_salir:hover {
+    background-color: #fee2e2;
+}
+
+.contenido_principal {
+    height: 100vh;
+    background-color: var(--color-fondo-pagina);
+}
+
+/* Base de Secciones dinámicas */
+.tarjeta_seccion {
+    background-color: #ffffff;
+    border-radius: var(--radio-borde-tarjeta);
+    box-shadow: var(--sombra-tarjeta);
+    border: 1px solid #f0f0f0;
+}
+
+
+/* =========================================
+   VENTANA: VENTAS 
+   ========================================= */
+.barra_busqueda_ventas {
+    border: 1px solid var(--color-borde-input);
+    border-radius: 20px;
+    background-color: var(--color-fondo-input);
+    overflow: hidden;
+}
+
+.barra_busqueda_ventas .form-control {
+    background-color: transparent;
+}
+
+.barra_busqueda_ventas .form-control:focus {
+    background-color: #ffffff;
+}
+
+.categorias_scroll::-webkit-scrollbar {
+    height: 6px;
+}
+
+.categorias_scroll::-webkit-scrollbar-thumb {
+    background-color: #d1d5db;
+    border-radius: 10px;
+}
+
+.pildora_categoria {
+    background-color: var(--color-fondo-pagina);
+    color: var(--color-texto-secundario);
+    border-radius: 20px;
+    padding: 6px 18px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+
+.pildora_categoria:hover {
+    background-color: #e5e7eb;
+}
+
+.pildora_categoria.activa {
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
+
+.tarjeta_producto {
+    border: 1px solid var(--color-borde-input);
+    border-radius: var(--radio-borde-elementos);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tarjeta_producto:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.05);
+    border-color: #d1d5db;
+}
+
+.imagen_producto {
+    height: 130px;
+    width: 100%;
+    object-fit: cover;
+    background-color: #f8f9fa;
+}
+
+.precio_producto {
+    color: var(--color-primario);
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.indicador_stock {
+    gap: 6px;
+    color: var(--color-texto-secundario);
+}
+
+.cajita_stock {
+    width: 28px;
+    height: 28px;
+    background-color: var(--color-fondo-pagina);
+    border: 1px solid var(--color-borde-input);
+    border-radius: 6px;
+}
+
+.cajita_stock i {
+    font-size: 0.9rem;
+}
+
+.numero_stock {
+    font-size: 0.85rem;
+}
+
+.carrito_vacio {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #cbd5e1;
+}
+
+.icono_carrito_vacio {
+    font-size: 3.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.resumen_venta {
+    border-top: 1px solid var(--color-borde-input);
+    padding-top: 1.5rem;
+}
+
+.texto_total {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--color-primario);
+}
+
+.boton_metodo_pago {
+    border: 1px solid var(--color-borde-input);
+    background-color: #ffffff;
+    color: var(--color-texto-secundario);
+    border-radius: var(--radio-borde-elementos);
+    padding: 12px 5px;
+    font-size: 0.85rem;
+    flex: 1;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.boton_metodo_pago:hover {
+    border-color: #d1d5db;
+    background-color: #f8f9fa;
+}
+
+.boton_metodo_pago.activa {
+    border-color: var(--color-primario);
+    color: var(--color-primario);
+    background-color: var(--color-fondo-icono);
+}
+
+.boton_cancelar {
+    background-color: #ffffff;
+    border: 1px solid var(--color-borde-input);
+    color: var(--color-texto-secundario);
+    transition: all 0.2s ease;
+}
+
+.boton_cancelar:hover {
+    background-color: #f8f9fa;
+    color: var(--color-texto-principal);
+}
+
+
+/* =========================================
+   VENTANA: PRODUCTOS (CATÁLOGO)
+   ========================================= */
+.boton_filtro {
+    border-color: var(--color-borde-input) !important;
+    border-radius: 20px;
+    padding: 0 20px;
+    transition: all 0.2s ease;
+    font-size: 0.95rem;
+}
+
+.boton_filtro:hover {
+    background-color: var(--color-fondo-pagina) !important;
+}
+
+.tabla_productos {
+    font-size: 0.9rem;
+    margin-bottom: 0;
+}
+
+.tabla_productos thead th {
+    color: var(--color-texto-secundario);
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--color-borde-input);
+}
+
+.tabla_productos tbody td {
+    padding: 18px 8px;
+    border-bottom: 1px solid #f3f4f6;
+    color: var(--color-texto-principal);
+}
+
+.pildora_categoria_tabla {
+    background-color: #f3f4f6;
+    color: var(--color-texto-secundario);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.pildora_estado {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.pildora_estado.activo {
+    background-color: var(--color-fondo-icono);
+    color: var(--color-primario);
+}
+
+.pildora_estado.inactivo {
+    background-color: #fee2e2;
+    color: #ef4444;
+}
+
+.stock_bajo {
+    color: #ef4444 !important;
+}
+
+.punto_rojo {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background-color: #ef4444;
+    border-radius: 50%;
+    margin-left: 4px;
+    vertical-align: middle;
+}
+
+.boton_accion {
+    padding: 4px 8px;
+    transition: color 0.2s;
+    border: none;
+    background: transparent;
+}
+
+.boton_accion:hover {
+    color: var(--color-primario) !important;
+    background-color: transparent;
+}
+
+
+/* =========================================
+   VENTANA: CATEGORÍAS
+   ========================================= */
+.tarjeta_categoria {
+    border: 1px solid var(--color-borde-input);
+    border-radius: var(--radio-borde-elementos);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    background-color: #ffffff;
+}
+
+.tarjeta_categoria:hover {
+    border-color: var(--color-primario);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.pildora_conteo {
+    background-color: var(--color-fondo-icono);
+    color: var(--color-primario);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+
+/* =========================================
+   VENTANA: COMPRAS
+   ========================================= */
+.contenedor_tabla_compras {
+    border: 1px solid var(--color-borde-input);
+    border-radius: var(--radio-borde-elementos);
+    background-color: #ffffff;
+    overflow: hidden;
+}
+
+.tabla_compras {
+    font-size: 0.9rem;
+    margin-bottom: 0;
+}
+
+.tabla_compras thead th {
+    color: var(--color-texto-secundario);
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    padding: 16px 8px;
+    border-bottom: 1px solid var(--color-borde-input);
+    background-color: #ffffff;
+}
+
+.tabla_compras tbody td {
+    padding: 18px 8px;
+    border-bottom: 1px solid #f3f4f6;
+    color: var(--color-texto-principal);
+    background-color: #ffffff;
+}
+
+.tabla_compras tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.fila_compra {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.fila_compra:hover td {
+    background-color: #f8f9fa;
+}
+
+.id_compra_texto {
+    color: var(--color-primario);
+    font-weight: 700;
+}
+
+
+/* =========================================
+   VENTANA: REPORTES
+   ========================================= */
+.tarjeta_reporte {
+    background-color: #ffffff;
+    border-radius: var(--radio-borde-tarjeta);
+    box-shadow: var(--sombra-tarjeta);
+    border: 1px solid var(--color-borde-input);
+}
+
+.icono_kpi {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.icono_kpi.verde {
+    background-color: #d1fae5;
+    color: #10b981;
+}
+
+.icono_kpi.azul {
+    background-color: #dbeafe;
+    color: #3b82f6;
+}
+
+.icono_kpi.morado {
+    background-color: #f3e8ff;
+    color: #a855f7;
+}
+
+.icono_kpi.naranja {
+    background-color: #ffedd5;
+    color: #f97316;
+}
+
+.texto_kpi_valor {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--color-texto-principal);
+    margin: 8px 0 4px 0;
+    letter-spacing: -0.5px;
+}
+
+.tendencia_positiva {
+    color: #10b981;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.texto_kpi_secundario {
+    color: var(--color-texto-secundario);
+    font-size: 0.85rem;
+}
+
+.contenedor_canvas {
+    width: 100%;
+}
+
+
+/* =========================================
+   VENTANA: AJUSTES
+   ========================================= */
+.tarjeta_ajustes {
+    background-color: #ffffff;
+    border-radius: var(--radio-borde-tarjeta);
+    box-shadow: var(--sombra-tarjeta);
+    border: 1px solid var(--color-borde-input);
+}
+
+/* Sección de subir logo */
+.zona_subir_logo {
+    border: 2px dashed #cbd5e1;
+    border-radius: var(--radio-borde-elementos);
+    background-color: #f8fafc;
+    transition: all 0.2s ease;
+}
+
+.zona_subir_logo:hover {
+    border-color: var(--color-primario);
+    background-color: var(--color-fondo-icono);
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+/* Inputs de configuración */
+.input_ajustes {
+    border: 1px solid var(--color-borde-input);
+    border-radius: var(--radio-borde-elementos);
+    background-color: var(--color-fondo-input);
+    transition: all 0.2s ease;
+}
+
+.input_ajustes .form-control,
+.input_ajustes .input-group-text {
+    background-color: transparent;
+}
+
+.input_ajustes:focus-within {
+    border-color: var(--color-primario);
+    background-color: #ffffff;
+}
+
+/* Select de Moneda */
+.select_ajustes {
+    border: 1px solid var(--color-borde-input);
+    background-color: var(--color-fondo-input);
+    border-radius: var(--radio-borde-elementos);
+    cursor: pointer;
+}
+
+.select_ajustes:focus {
+    border-color: var(--color-primario);
+}
+
+/* Input IP */
+.input_ip {
+    border: 1px solid var(--color-borde-input);
+    background-color: var(--color-fondo-input);
+    border-radius: var(--radio-borde-elementos);
+}
+
+.input_ip:focus {
+    border-color: var(--color-primario);
+    background-color: #ffffff;
+}
+
+/* Selector de Paleta de Colores */
+.input_color {
+    width: 60px;
+    height: 38px;
+    padding: 0.2rem;
+    border: 1px solid var(--color-borde-input);
+    border-radius: var(--radio-borde-elementos);
+    cursor: pointer;
+    background-color: var(--color-fondo-input);
+}
+
+/* Switch de Modo Oscuro */
+.switch_ajustes:checked {
+    background-color: var(--color-primario);
+    border-color: var(--color-primario);
+}
+
+/* Botones de Respaldo */
+.btn_respaldo {
+    background-color: #e0f2fe;
+    /* Azul claro */
+    color: #0284c7;
+    border: 1px solid #bae6fd;
+    transition: all 0.2s ease;
+}
+
+.btn_respaldo:hover {
+    background-color: #bae6fd;
+    color: #0369a1;
+}
+
+.btn_importar {
+    background-color: #ffedd5; /* Naranja claro */
+    color: #ea580c; /* Texto naranja vibrante */
+    border: 1px solid #fed7aa; /* Borde naranja suave */
+    transition: all 0.2s ease;
+}
+
+.btn_importar:hover {
+    background-color: #fed7aa; /* Fondo un poco más fuerte al pasar el mouse */
+    color: #c2410c; /* Texto más oscuro */
+}
