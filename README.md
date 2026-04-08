@@ -36,4 +36,4 @@ PD: Se agregaron archivos "temp.txt" para evitar borrado de carpetas vacias
 <===================================================================>
 - 03 de abril del 2026; 5:30 pm. Se crearon los models,controllers y routes faltantes. by Dinora Nuño
 <===================================================================>
-- 07 de abril del 2026; 10:20 pm. Se diseñaron las ventanas principales del software
+- 07 de abril del 2026; 10:20 pm. Se diseñaron las ventanas principales del software. by Diego Fregoso
