@@ -40,3 +40,6 @@ PD: Se agregaron archivos "temp.txt" para evitar borrado de carpetas vacias
 
 <===================================================================>
 - 08 de abril del 2026; 1:50 pm. Se crearon models y routes de la carpeta index. by Dinora Nuño
+
+<===================================================================>
+- 08 de abril del 2026; 09:20 pm. Se empezo a enlazar la base de datos con las ventanas. by Diego Fregoso

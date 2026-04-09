@@ -1,16 +1,9 @@
-import { Negocio } from "../../models/negocio.model.js";
+import { Negocio } from "../../models/configuraciones/negocio.model.js";
 
-// ===============================
-// OBTENER NEGOCIO
-// ===============================
 export const getNegocio = async (req, res) => {
     try {
         const negocio = await Negocio.findOne();
-
-        if (!negocio) {
-            return res.status(404).json({ message: "No hay negocio" });
-        }
-
+        if (!negocio) return res.status(404).json({ message: "No hay negocio configurado" });
         res.json(negocio);
     } catch (error) {
         console.error(error);
@@ -18,35 +11,15 @@ export const getNegocio = async (req, res) => {
     }
 };
 
-// ===============================
-// CREAR NEGOCIO
-// ===============================
-export const createNegocio = async (req, res) => {
-    try {
-        const data = req.body;
-
-        await Negocio.create(data);
-
-        res.json({ message: "Negocio creado" });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Error al crear negocio" });
-    }
-};
-
-// ===============================
-// ACTUALIZAR NEGOCIO
-// ===============================
 export const updateNegocio = async (req, res) => {
     try {
-        const { id } = req.params;
         const data = req.body;
+        const [updated] = await Negocio.update(data, { where: { id_negocio: 1 } });
 
-        await Negocio.update(data, {
-            where: { id_negocio: id }
-        });
-
-        res.json({ message: "Negocio actualizado" });
+        if (updated === 0) {
+            await Negocio.create(data);
+        }
+        res.json({ message: "Datos del negocio guardados correctamente" });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Error al actualizar negocio" });

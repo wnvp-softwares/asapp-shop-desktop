@@ -20,7 +20,13 @@
                 <h1 class="titulo_login h4 fw-bold mb-2">Punto de Venta</h1>
                 <p class="subtitulo_login mb-0">Ingresa a tu cuenta para continuar</p>
             </div>
-            <form class="formulario_login">
+            <form class="formulario_login" id="formLogin">
+
+                <div id="alertaError" class="alert alert-danger d-none py-2 text-center"
+                    style="font-size: 0.85rem; font-weight: 500;" role="alert">
+                    Usuario o contraseña incorrectos.
+                </div>
+
                 <div class="mb-3">
                     <label for="usuario" class="etiqueta_formulario form-label fw-medium">Usuario</label>
                     <input type="text" class="campo_entrada form-control" id="usuario" placeholder="Ej. admin" required>
@@ -30,11 +36,12 @@
                     <input type="password" class="campo_entrada form-control" id="contrasena" placeholder="••••••••"
                         required>
                 </div>
-                <button type="submit" class="boton_primario btn w-100 fw-medium">Iniciar Sesión</button>
+                <button type="submit" id="btnSubmit" class="boton_primario btn w-100 fw-medium">Iniciar Sesión</button>
             </form>
         </div>
     </div>
     <script src="../../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../scripts/admin.js"></script>
 </body>
 
 </html>

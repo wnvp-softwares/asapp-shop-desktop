@@ -29,6 +29,8 @@ create table usuarios (
     nombre_completo varchar(100) not null,
     usuario varchar(50) not null unique,
     pass varchar(255) not null,
+    telefono varchar(20),
+    ultimo_acceso datetime,
     id_rol int not null,
     activo boolean default true,
 

@@ -1,10 +1,10 @@
 import { DataTypes } from "sequelize";
 import { database } from "../../configs/database.js";
 
-export const Negocio = database.define(
-    "Negocio",
+export const Proveedor = database.define(
+    "Proveedor",
     {
-        id_negocio: {
+        id_proveedor: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
@@ -13,20 +13,14 @@ export const Negocio = database.define(
             type: DataTypes.STRING(100),
             allowNull: false
         },
-        direccion: {
-            type: DataTypes.STRING(255)
-        },
         telefono: {
             type: DataTypes.STRING(20)
         },
-        rfc: {
-            type: DataTypes.STRING(20)
-        },
-        logo: {
-            type: DataTypes.STRING(255)
+        correo: {
+            type: DataTypes.STRING(100)
         }
     }, {
-    tableName: "negocios",
+    tableName: "proveedores",
     freezeTableName: true,
     timestamps: false
 });
