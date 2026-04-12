@@ -75,14 +75,16 @@
                     <i class="bi bi-person fs-5"></i>
                 </div>
                 <div class="info_usuario d-flex flex-column">
-                    <span class="fw-bold text-dark lh-1 mb-1" style="font-size: 0.95rem;" id="nombreUsuarioSidebar">Admin User</span>
-                    <small class="text-muted lh-1" style="font-size: 0.8rem;" id="rolUsuarioSidebar">Administrador</small>
+                    <span class="fw-bold text-dark lh-1 mb-1" style="font-size: 0.95rem;"
+                        id="nombreUsuarioSidebar">Admin User</span>
+                    <small class="text-muted lh-1" style="font-size: 0.8rem;"
+                        id="rolUsuarioSidebar">Administrador</small>
                 </div>
             </div>
             <div class="px-3 pb-4">
-                <a href="login.html"
+                <a href="#" id="btnCerrarSesion"
                     class="nav-link boton_salir d-flex align-items-center text-danger fw-medium px-3 py-2 rounded">
-                    <i class="bi bi-box-arrow-right me-3 fs-5"></i> Cerrar sesión
+                    <i class="bi bi-box-arrow-right me-3 fs-5"></i> Cerrar Sesión
                 </a>
             </div>
         </div>
@@ -96,6 +98,33 @@
             <p>Selecciona una opción del menú.</p>
         </div>
     </main>
+
+    <div class="modal fade" id="modalConfirmacionGenerico" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg text-center"
+                style="border-radius: var(--radio-borde-tarjeta); padding: 2rem;">
+
+                <div class="modal-body p-0 mb-4">
+                    <div class="mx-auto mb-4 d-flex align-items-center justify-content-center"
+                        style="width: 75px; height: 75px; background-color: #fee2e2; border-radius: 50%;">
+                        <i class="bi bi-exclamation-triangle text-danger" style="font-size: 2.5rem;"></i>
+                    </div>
+                    <h4 class="fw-bold text-dark mb-3" id="tituloModalConfirmacion">¿Estás seguro?</h4>
+                    <p class="text-muted mb-0 px-4" id="mensajeModalConfirmacion" style="font-size: 1rem;">
+                        Esta acción no se puede deshacer.
+                    </p>
+                </div>
+
+                <div class="d-flex gap-3 justify-content-center mt-2 px-3">
+                    <button type="button" class="btn btn-light px-4 py-2 border flex-grow-1 fw-medium"
+                        style="border-radius: var(--radio-borde-elementos);" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger px-4 py-2 flex-grow-1 fw-medium"
+                        style="border-radius: var(--radio-borde-elementos);" id="btnConfirmarAccionModal">Sí,
+                        eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="../../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../scripts/admin.js"></script>

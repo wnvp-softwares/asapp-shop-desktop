@@ -75,3 +75,56 @@ export const loginUsuario = async (req, res) => {
         res.status(500).json({ message: "Error al intentar iniciar sesión." });
     }
 };
+
+// ===============================
+// EDITAR USUARIO (PUT)
+// ===============================
+export const updateUsuario = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { nombre_completo, usuario, pass, telefono, id_rol, activo } = req.body;
+
+        const user = await Usuario.findByPk(id);
+        if (!user) return res.status(404).json({ message: "Usuario no encontrado" });
+
+        user.nombre_completo = nombre_completo || user.nombre_completo;
+        user.usuario = usuario || user.usuario;
+        user.telefono = telefono !== undefined ? telefono : user.telefono;
+        user.id_rol = id_rol || user.id_rol;
+
+        if (activo !== undefined) user.activo = activo;
+
+        if (pass && pass.trim() !== "") {
+            user.pass = await bcrypt.hash(pass, 10);
+        }
+
+        await user.save();
+        res.json({ message: "Usuario actualizado con éxito" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error al actualizar usuario." });
+    }
+};
+
+// ===============================
+// ELIMINAR USUARIO (DELETE)
+// ===============================
+export const deleteUsuario = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const user = await Usuario.findByPk(id);
+        if (!user) return res.status(404).json({ message: "Usuario no encontrado" });
+
+        if (user.usuario === 'admin') {
+            return res.status(400).json({ message: "No puedes eliminar al administrador principal." });
+        }
+
+        await user.destroy(); 
+        
+        res.json({ message: "Usuario eliminado correctamente" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error al eliminar el usuario. Es posible que tenga ventas registradas." });
+    }
+};

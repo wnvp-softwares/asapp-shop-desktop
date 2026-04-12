@@ -5,7 +5,7 @@
 
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h4 class="fw-bold text-dark mb-0">Usuarios</h4>
-            <button class="btn boton_primario btn-sm px-3 fw-medium d-flex align-items-center">
+            <button id="btnNuevoUsuario" class="btn boton_primario btn-sm px-3 fw-medium d-flex align-items-center">
                 <i class="bi bi-plus-lg me-2"></i> Nuevo usuario
             </button>
         </div>
@@ -14,12 +14,17 @@
             <span class="input-group-text bg-transparent border-0 text-muted ps-3">
                 <i class="bi bi-search"></i>
             </span>
-            <input type="text" class="form-control border-0 shadow-none py-2 bg-transparent"
+            <input type="text" id="inputBuscarUsuario" class="form-control border-0 shadow-none py-2 bg-transparent"
                 placeholder="Buscar usuario...">
+        </div>
+
+        <div id="mensajeSinResultados" class="d-none text-center mb-3">
+            <p class="text-muted mb-0" style="font-size: 0.95rem;">No se encontraron usuarios.</p>
         </div>
 
         <div class="lista_usuarios_scroll flex-grow-1 overflow-auto pe-2">
         </div>
+
     </div>
 
     <div class="flex-grow-1 h-100 bg-white d-flex flex-column" style="padding: 3rem; overflow-y: auto;">
@@ -46,10 +51,10 @@
                     </div>
                 </div>
                 <div class="d-flex gap-2">
-                    <button class="btn btn_editar_usuario px-3 fw-medium text-nowrap">
+                    <button id="btnEditarUsuario" class="btn btn_editar_usuario px-3 fw-medium text-nowrap">
                         <i class="bi bi-pencil me-2"></i> Editar
                     </button>
-                    <button class="btn btn_eliminar_usuario px-3 fw-medium text-nowrap">
+                    <button id="btnEliminarUsuario" class="btn btn_eliminar_usuario px-3 fw-medium text-nowrap">
                         <i class="bi bi-trash3 me-2"></i> Eliminar
                     </button>
                 </div>
@@ -85,6 +90,71 @@
             </div>
         </div>
 
+    </div>
+
+    <div class="modal fade" id="modalFormularioUsuario" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow-lg" style="border-radius: var(--radio-borde-tarjeta);">
+
+                <div class="modal-header border-0 pb-0 px-4 pt-4">
+                    <h5 class="modal-title fw-bold text-dark" id="tituloModalUsuario">Nuevo Usuario</h5>
+                    <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body px-4 py-4">
+                    <form id="formUsuarioData">
+                        <input type="hidden" id="inputIdUsuario">
+
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <label class="form-label text-muted small fw-medium mb-1">Nombre Completo</label>
+                                <input type="text" class="campo_entrada form-control" id="inputNombreUsr" >
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label text-muted small fw-medium mb-1">Usuario de Acceso</label>
+                                <input type="text" class="campo_entrada form-control" id="inputUsuarioAcceso" >
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label text-muted small fw-medium mb-1">Rol</label>
+                                <select class="select_ajustes form-select campo_entrada" id="inputRolUsr" >
+                                    <option value="" disabled selected>Cargando roles...</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label text-muted small fw-medium mb-1">Teléfono</label>
+                                <input type="text" class="campo_entrada form-control" id="inputTelefonoUsr">
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label text-muted small fw-medium mb-1">Contraseña <span id="hintPass"
+                                        class="fw-normal" style="color:#a1a1aa; font-size: 0.8rem;"></span></label>
+                                <input type="password" class="campo_entrada form-control" id="inputPassUsr">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer border-0 px-4 pb-4 pt-0 justify-content-start">
+                    <button type="button" class="btn btn-light px-4 border"
+                        style="border-radius: var(--radio-borde-elementos);" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" form="formUsuarioData" class="btn boton_primario px-4"
+                        id="btnGuardarUsuarioModal">Guardar Usuario</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 2000;">
+        <div id="toastNotificacion" class="toast align-items-center text-white bg-success border-0" role="alert"
+            aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body fw-medium" id="toastMensaje">
+                    Acción realizada con éxito.
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto shadow-none" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+            </div>
+        </div>
     </div>
 
 </div>
