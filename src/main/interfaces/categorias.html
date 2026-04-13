@@ -8,56 +8,61 @@
                 <span class="input-group-text bg-transparent border-0 text-muted ps-3">
                     <i class="bi bi-search"></i>
                 </span>
-                <input type="text" class="form-control border-0 shadow-none" placeholder="Buscar categoría...">
+                <input type="text" id="inputBuscarCategoria" class="form-control border-0 shadow-none"
+                    placeholder="Buscar categoría...">
             </div>
 
-            <button class="btn boton_primario px-3 px-md-4 fw-medium d-flex align-items-center text-nowrap">
+            <button id="btnNuevaCategoria"
+                class="btn boton_primario px-3 px-md-4 fw-medium d-flex align-items-center text-nowrap">
                 <i class="bi bi-plus-lg me-2"></i> Nueva Categoría
             </button>
         </div>
     </div>
 
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 overflow-auto pb-3 pe-2">
-
-        <div class="col">
-            <div class="tarjeta_categoria p-4 h-100 d-flex flex-column">
-                <div class="d-flex justify-content-between align-items-start mb-3">
-                    <h5 class="fw-bold text-dark mb-0">Bebidas</h5>
-                    <span class="pildora_conteo">45 productos</span>
-                </div>
-                <p class="text-secondary mb-0" style="font-size: 0.9rem;">Refrescos, aguas, jugos</p>
-            </div>
-        </div>
-
-        <div class="col">
-            <div class="tarjeta_categoria p-4 h-100 d-flex flex-column">
-                <div class="d-flex justify-content-between align-items-start mb-3">
-                    <h5 class="fw-bold text-dark mb-0">Botanas</h5>
-                    <span class="pildora_conteo">32 productos</span>
-                </div>
-                <p class="text-secondary mb-0" style="font-size: 0.9rem;">Papas, cacahuates, frituras</p>
-            </div>
-        </div>
-
-        <div class="col">
-            <div class="tarjeta_categoria p-4 h-100 d-flex flex-column">
-                <div class="d-flex justify-content-between align-items-start mb-3">
-                    <h5 class="fw-bold text-dark mb-0">Dulces</h5>
-                    <span class="pildora_conteo">120 productos</span>
-                </div>
-                <p class="text-secondary mb-0" style="font-size: 0.9rem;">Chocolates, gomitas, paletas</p>
-            </div>
-        </div>
-
-        <div class="col">
-            <div class="tarjeta_categoria p-4 h-100 d-flex flex-column">
-                <div class="d-flex justify-content-between align-items-start mb-3">
-                    <h5 class="fw-bold text-dark mb-0">Lácteos</h5>
-                    <span class="pildora_conteo">18 productos</span>
-                </div>
-                <p class="text-secondary mb-0" style="font-size: 0.9rem;">Leche, queso, crema</p>
-            </div>
-        </div>
-
+    <div id="mensajeSinResultadosCategoria" class="d-none text-center mb-3 mt-3">
+        <p class="text-muted mb-0" style="font-size: 0.95rem;">No se encontraron categorías.</p>
     </div>
+
+    <div id="contenedorCategorias"
+        class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 overflow-auto pb-3 pe-2">
+    </div>
+
+    <div class="modal fade" id="modalFormularioCategoria" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow-lg" style="border-radius: var(--radio-borde-tarjeta);">
+
+                <div class="modal-header border-0 pb-0 px-4 pt-4">
+                    <h5 class="modal-title fw-bold text-dark" id="tituloModalCategoria">Nueva Categoría</h5>
+                    <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body px-4 py-4">
+                    <form id="formCategoriaData">
+                        <input type="hidden" id="inputIdCategoria">
+
+                        <div class="row g-4">
+                            <div class="col-md-12">
+                                <label class="form-label text-muted small fw-medium mb-1">Nombre</label>
+                                <input type="text" class="campo_entrada form-control" id="inputNombreCat">
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label text-muted small fw-medium mb-1">Descripción</label>
+                                <textarea class="campo_entrada form-control" id="inputDescripcionCat" rows="3"
+                                    style="resize: none;"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer border-0 px-4 pb-4 pt-0 justify-content-start">
+                    <button type="button" class="btn btn-light px-4 border"
+                        style="border-radius: var(--radio-borde-elementos);" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" form="formCategoriaData" class="btn boton_primario px-4"
+                        id="btnGuardarCategoriaModal">Guardar Categoría</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>

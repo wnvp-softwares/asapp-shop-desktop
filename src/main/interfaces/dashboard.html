@@ -27,7 +27,8 @@
             <nav class="navegacion_principal px-3">
                 <ul class="nav flex-column gap-1">
                     <li class="nav-item">
-                        <a href="#" class="nav-link activo d-flex align-items-center" data-vista="ventas.html">
+                        <a href="#" class="nav-link activo d-flex align-items-center text-secondary"
+                            data-vista="ventas.html">
                             <i class="bi bi-cart3 me-3 fs-5"></i> Ventas
                         </a>
                     </li>
@@ -122,6 +123,19 @@
                         style="border-radius: var(--radio-borde-elementos);" id="btnConfirmarAccionModal">Sí,
                         eliminar</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 2000;">
+        <div id="toastNotificacion" class="toast align-items-center text-white bg-success border-0" role="alert"
+            aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body fw-medium" id="toastMensaje">
+                    Acción realizada con éxito.
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto shadow-none" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
             </div>
         </div>
     </div>

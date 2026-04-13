@@ -42,7 +42,8 @@ create table usuarios (
 -- =========================
 create table categorias (
     id_categoria int auto_increment primary key,
-    nombre varchar(100) not null
+    nombre varchar(100) not null,
+    descripcion varchar(255)
 );
 
 -- =========================

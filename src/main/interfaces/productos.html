@@ -2,7 +2,7 @@
 
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h4 class="fw-bold text-dark mb-0">Catálogo de Productos</h4>
-        <button class="btn boton_primario px-3 px-md-4 fw-medium d-flex align-items-center">
+        <button class="btn boton_primario px-3 px-md-4 fw-medium d-flex align-items-center" id="btnNuevoProducto">
             <i class="bi bi-plus-lg me-2"></i> Agregar Producto
         </button>
     </div>
@@ -12,88 +12,141 @@
             <span class="input-group-text bg-transparent border-0 text-muted ps-3">
                 <i class="bi bi-search"></i>
             </span>
-            <input type="text" class="form-control border-0 shadow-none" placeholder="Buscar por nombre o código...">
+            <input type="text" id="inputBuscarProducto" class="form-control border-0 shadow-none"
+                placeholder="Buscar por nombre o código...">
         </div>
 
-        <button class="btn boton_filtro bg-white d-flex align-items-center text-dark">
-            <i class="bi bi-funnel me-2 text-muted"></i> Todos los estados
-        </button>
+        <div class="position-relative d-flex align-items-center">
+            <i class="bi bi-funnel text-muted position-absolute"
+                style="left: 1rem; pointer-events: none; z-index: 10;"></i>
+            <select id="filtroEstadoProducto" class="form-select boton_filtro bg-white text-dark shadow-none ps-5 py-2"
+                style="width: 220px; cursor: pointer; border: 1px solid var(--color-borde-input) !important;">
+                <option value="todos">Todos los estados</option>
+                <option value="activos">Activos</option>
+                <option value="inactivos">Inactivos</option>
+            </select>
+        </div>
     </div>
 
     <div class="table-responsive flex-grow-1 pr-2">
         <table class="table tabla_productos align-middle border-transparent">
             <thead>
                 <tr>
-                    <th class="ps-3">CÓDIGO</th>
-                    <th>NOMBRE</th>
-                    <th>CATEGORÍA</th>
-                    <th>PRECIO</th>
-                    <th>STOCK</th>
-                    <th>ESTADO</th>
+                    <th class="ps-3 th-sortable" data-sort="codigo_barras">CÓDIGO <i
+                            class="bi bi-arrow-down-up icono-orden"></i></th>
+                    <th class="th-sortable active" data-sort="nombre">PRODUCTO <i
+                            class="bi bi-arrow-down icono-orden"></i></th>
+                    <th class="th-sortable" data-sort="categoria">CATEGORÍA <i
+                            class="bi bi-arrow-down-up icono-orden"></i></th>
+                    <th class="th-sortable" data-sort="precio">PRECIO <i class="bi bi-arrow-down-up icono-orden"></i>
+                    </th>
+                    <th class="th-sortable" data-sort="stock">STOCK <i class="bi bi-arrow-down-up icono-orden"></i></th>
+                    <th class="th-sortable" data-sort="estado">ESTADO <i class="bi bi-arrow-down-up icono-orden"></i>
+                    </th>
                     <th class="text-end pe-3">ACCIONES</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td class="text-secondary ps-3">75010000001</td>
-                    <td class="fw-medium text-dark">Refresco de Cola 600ml</td>
-                    <td><span class="pildora_categoria_tabla">Bebidas</span></td>
-                    <td class="fw-bold text-dark">$18.00</td>
-                    <td class="fw-medium text-dark">50</td>
-                    <td><span class="pildora_estado activo">Activo</span></td>
-                    <td class="text-end pe-3">
-                        <button class="btn btn-sm text-secondary boton_accion" title="Editar"><i
-                                class="bi bi-pencil"></i></button>
-                        <button class="btn btn-sm text-secondary boton_accion" title="Eliminar"><i
-                                class="bi bi-trash"></i></button>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="text-secondary ps-3">75010000002</td>
-                    <td class="fw-medium text-dark">Agua Natural 1L</td>
-                    <td><span class="pildora_categoria_tabla">Bebidas</span></td>
-                    <td class="fw-bold text-dark">$15.00</td>
-                    <td class="fw-medium text-dark">30</td>
-                    <td><span class="pildora_estado activo">Activo</span></td>
-                    <td class="text-end pe-3">
-                        <button class="btn btn-sm text-secondary boton_accion" title="Editar"><i
-                                class="bi bi-pencil"></i></button>
-                        <button class="btn btn-sm text-secondary boton_accion" title="Eliminar"><i
-                                class="bi bi-trash"></i></button>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="text-secondary ps-3">75010000003</td>
-                    <td class="fw-medium text-dark">Papas Fritas 170g</td>
-                    <td><span class="pildora_categoria_tabla">Botanas</span></td>
-                    <td class="fw-bold text-dark">$25.00</td>
-                    <td class="fw-bold stock_bajo">2 <span class="punto_rojo"></span></td>
-                    <td><span class="pildora_estado activo">Activo</span></td>
-                    <td class="text-end pe-3">
-                        <button class="btn btn-sm text-secondary boton_accion" title="Editar"><i
-                                class="bi bi-pencil"></i></button>
-                        <button class="btn btn-sm text-secondary boton_accion" title="Eliminar"><i
-                                class="bi bi-trash"></i></button>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="text-secondary ps-3">75010000004</td>
-                    <td class="fw-medium text-dark">Barra de Chocolate</td>
-                    <td><span class="pildora_categoria_tabla">Dulces</span></td>
-                    <td class="fw-bold text-dark">$20.00</td>
-                    <td class="fw-bold stock_bajo">0 <span class="punto_rojo"></span></td>
-                    <td><span class="pildora_estado inactivo">Inactivo</span></td>
-                    <td class="text-end pe-3">
-                        <button class="btn btn-sm text-secondary boton_accion" title="Editar"><i
-                                class="bi bi-pencil"></i></button>
-                        <button class="btn btn-sm text-secondary boton_accion" title="Eliminar"><i
-                                class="bi bi-trash"></i></button>
-                    </td>
-                </tr>
+            <tbody id="tbodyProductos">
             </tbody>
         </table>
+    </div>
+
+    <div class="modal fade" id="modalFormularioProducto" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content border-0 shadow-lg" style="border-radius: var(--radio-borde-tarjeta);">
+
+                <div class="modal-header border-0 pb-0 px-4 pt-4">
+                    <h5 class="modal-title fw-bold text-dark" id="tituloModalProducto">Nuevo Producto</h5>
+                    <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal"
+                        id="btnRemoverImagen"></button>
+                </div>
+
+                <div class="modal-body px-4 py-4">
+                    <form id="formProductoData">
+                        <input type="hidden" id="inputIdProducto">
+
+                        <div class="row g-4">
+                            <div class="col-lg-4">
+                                <label class="form-label text-muted small fw-medium mb-2">Imagen del Producto</label>
+                                <div class="zona_subida_imagen d-flex flex-column align-items-center justify-content-center"
+                                    id="dropZoneImagen">
+                                    <input type="file" id="inputFileImagen" accept="image/*" class="d-none">
+
+                                    <div id="contenedorPreviewImagen" class="d-none w-100 h-100 position-relative">
+                                        <img id="imgPreview" src="" alt="Vista Previa"
+                                            class="img-fluid w-100 h-100 rounded object-fit-cover">
+                                        <button type="button"
+                                            class="btn btn-sm btn-danger position-absolute top-0 end-0 m-2 rounded-circle shadow"
+                                            id="btnRemoverImagen" style="width: 32px; height: 32px;"><i
+                                                class="bi bi-x-lg"></i></button>
+                                    </div>
+
+                                    <div id="contenedorTextosDropzone" class="text-center p-4">
+                                        <div class="icono_nube mb-2"><i
+                                                class="bi bi-cloud-arrow-up text-primary fs-1"></i></div>
+                                        <h6 class="fw-bold text-dark mb-1">Arrastra tu imagen aquí</h6>
+                                        <p class="text-muted small mb-0">o haz clic para buscar</p>
+                                        <span class="badge bg-light text-secondary mt-2 border">PNG, JPG, WEBP</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-8">
+                                <div class="row g-3">
+                                    <div class="col-md-8">
+                                        <label class="form-label text-muted small fw-medium mb-1">Nombre del
+                                            Producto</label>
+                                        <input type="text" class="campo_entrada form-control" id="inputNombreProd">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label text-muted small fw-medium mb-1">Código de
+                                            Barras</label>
+                                        <input type="text" class="campo_entrada form-control" id="inputCodigoProd"
+                                            placeholder="Opcional">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label text-muted small fw-medium mb-1">Categoría</label>
+                                        <select class="form-select campo_entrada" id="inputCategoriaProd">
+                                            <option value="" disabled selected>Seleccione una categoría</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label text-muted small fw-medium mb-1">Precio Unitario
+                                            ($)</label>
+                                        <input type="number" step="0.01" class="campo_entrada form-control"
+                                            id="inputPrecioProd">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label text-muted small fw-medium mb-1">Stock Actual</label>
+                                        <input type="number" class="campo_entrada form-control" id="inputStockProd">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label text-muted small fw-medium mb-1">Alerta de Stock
+                                            Mínimo</label>
+                                        <input type="number" class="campo_entrada form-control" id="inputStockMinProd"
+                                            placeholder="Ej: 5">
+                                    </div>
+                                    <div class="col-12 mt-3">
+                                        <div class="form-check form-switch d-flex align-items-center gap-2">
+                                            <input class="form-check-input" type="checkbox" id="switchEstadoProd"
+                                                checked style="transform: scale(1.3); margin-top: 0;">
+                                            <label class="form-check-label fw-medium text-dark ms-2"
+                                                for="switchEstadoProd">Producto Activo</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer border-0 px-4 pb-4 pt-0 justify-content-end">
+                    <button type="button" class="btn btn-light px-4 border"
+                        style="border-radius: var(--radio-borde-elementos);" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" form="formProductoData" class="btn boton_primario px-4"
+                        id="btnGuardarProductoModal">Guardar Producto</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

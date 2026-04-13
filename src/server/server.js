@@ -12,6 +12,7 @@ import "./models/index.model.js";
 const app = express();
 
 app.use(express.json());
+app.use('/src/uploads', express.static('src/uploads'));
 
 app.use("/api", apiRoutes);
 

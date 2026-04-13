@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
 import { database } from "../../configs/database.js";
-import { Categoria } from "../../models/productos/categoria.model.js";
 
 export const Producto = database.define(
     "Producto",
@@ -35,7 +34,12 @@ export const Producto = database.define(
         },
         stock_minimo: {
             type: DataTypes.INTEGER,
+            allowNull: false,
             defaultValue: 5
+        },
+        estado: {
+            type: DataTypes.ENUM('activo', 'inactivo'),
+            defaultValue: 'activo'
         }
     }, {
     tableName: "productos",

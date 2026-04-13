@@ -47,3 +47,6 @@ PD: Se agregaron archivos "temp.txt" para evitar borrado de carpetas vacias
 
 <===================================================================>
 - 11 de abril del 2026; 10:20 pm. Conclusion de funcionalidad del apartado de "Usuarios" y "Login". by Diego Fregoso
+
+<===================================================================>
+- 12 de abril del 2026; 10:40 pm. Se realizo la funcionalidad de Categorias, Productos, y una gran parte de la Venta. Ademas de unos pequeños cambios en la BD. by Diego Fregoso

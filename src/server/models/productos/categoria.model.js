@@ -12,6 +12,10 @@ export const Categoria = database.define(
         nombre: {
             type: DataTypes.STRING(100),
             allowNull: false
+        },
+        descripcion: {
+            type: DataTypes.STRING(255),
+            allowNull: true 
         }
     }, {
     tableName: "categorias",
