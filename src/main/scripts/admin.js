@@ -9,7 +9,6 @@ const fs = require('fs');
 const path = require('path');
 const Chart = require('chart.js/auto');
 
-// Variables de estado del cascarón
 let contenedorPrincipal;
 let enlacesNavegacion;
 
@@ -19,6 +18,8 @@ let enlacesNavegacion;
 document.addEventListener('DOMContentLoaded', () => {
     const formLogin = document.getElementById('formLogin');
     contenedorPrincipal = document.getElementById('contenedor_dinamico');
+
+    cargarDatosNegocioGlobal();
 
     if (formLogin) {
         iniciarLogicaLogin();
@@ -32,6 +33,71 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+async function cargarDatosNegocioGlobal() {
+    try {
+        const res = await fetch('http://localhost:3000/api/negocio');
+        if (res.ok) {
+            const negocio = await res.json();
+
+            aplicarModoOscuro(negocio.modo_oscuro);
+
+            if (negocio.color_primario) {
+                aplicarColorPrimario(negocio.color_primario);
+            }
+
+            if (negocio.nombre) {
+                const tituloSidebar = document.querySelector('.cabecera_logo span');
+                if (tituloSidebar) tituloSidebar.textContent = negocio.nombre;
+
+                const tituloLogin = document.querySelector('.titulo_login');
+                if (tituloLogin) tituloLogin.textContent = negocio.nombre;
+            }
+
+            if (negocio.logo) {
+                const urlLogo = `http://localhost:3000${negocio.logo}`;
+
+                const iconoSidebar = document.querySelector('.cabecera_logo .icono_logo');
+                if (iconoSidebar) {
+                    iconoSidebar.innerHTML = `<img src="${urlLogo}" alt="Logo" class="w-100 h-100 rounded" style="object-fit: cover;">`;
+                    iconoSidebar.classList.remove('text-success', 'bg-light', 'bg-opacity-10');
+                    iconoSidebar.style.padding = '0';
+                }
+
+                const iconoLogin = document.querySelector('.contenedor_icono');
+                if (iconoLogin) {
+                    iconoLogin.innerHTML = `<img src="${urlLogo}" alt="Logo" class="w-100 h-100 rounded-circle shadow-sm" style="object-fit: cover;">`;
+                    iconoLogin.style.padding = '0';
+                    iconoLogin.style.background = 'transparent';
+                }
+            }
+        }
+    } catch (e) { console.error("No se pudo cargar la info del negocio"); }
+}
+
+function aplicarModoOscuro(isDark) {
+    if (isDark) {
+        document.body.setAttribute('data-theme', 'dark');
+    } else {
+        document.body.removeAttribute('data-theme');
+    }
+}
+
+function aplicarColorPrimario(hex) {
+    document.documentElement.style.setProperty('--color-primario', hex);
+
+    let r = parseInt(hex.slice(1, 3), 16);
+    let g = parseInt(hex.slice(3, 5), 16);
+    let b = parseInt(hex.slice(5, 7), 16);
+
+    let rDark = Math.max(0, r - 25);
+    let gDark = Math.max(0, g - 25);
+    let bDark = Math.max(0, b - 25);
+    const hoverHex = `#${rDark.toString(16).padStart(2, '0')}${gDark.toString(16).padStart(2, '0')}${bDark.toString(16).padStart(2, '0')}`;
+    document.documentElement.style.setProperty('--color-primario-hover', hoverHex);
+
+    const fondoClarito = `rgba(${r}, ${g}, ${b}, 0.12)`;
+    document.documentElement.style.setProperty('--color-fondo-icono', fondoClarito);
+}
 
 /* ==========================================================================
    🔐 MÓDULO 1: LÓGICA DE LOGIN Y SESIÓN
@@ -143,6 +209,7 @@ function cargarVista(nombreArchivo) {
         else if (nombreArchivo === 'categorias.html') setTimeout(() => configurarModuloCategorias(), 50);
         else if (nombreArchivo === 'productos.html') setTimeout(() => configurarModuloProductos(), 50);
         else if (nombreArchivo === 'ventas.html') setTimeout(() => configurarModuloPOS(), 50);
+        else if (nombreArchivo === 'ajustes.html') setTimeout(() => configurarModuloAjustes(), 50);
 
     } catch (error) {
         console.error(`Error al cargar la vista ${nombreArchivo}:`, error);
@@ -632,39 +699,33 @@ let productosDisponibles = [];
 let archivoImagenSeleccionado = null;
 let imagenEliminada = false;
 
-// 🌟 Estado global del ordenamiento (Por defecto: por nombre A-Z)
 let ordenActual = { columna: 'nombre', ascendente: true };
 
 function configurarModuloProductos() {
-    configurarOrdenamientoTabla(); // Activa los clics en los encabezados
+    configurarOrdenamientoTabla(); 
     cargarProductos();
     configurarBuscadorYFiltroProductos();
     configurarModalesProducto();
 }
 
-// 🌟 FUNCIÓN PARA ORDENAR EL ARREGLO DE PRODUCTOS
 function ordenarArrayProductos(productos) {
     return productos.sort((a, b) => {
         let valorA = a[ordenActual.columna];
         let valorB = b[ordenActual.columna];
 
-        // Lógica de extracción de datos complejos (categorías)
         if (ordenActual.columna === 'categoria') {
             valorA = a.categoria ? a.categoria.nombre.toLowerCase() : '';
             valorB = b.categoria ? b.categoria.nombre.toLowerCase() : '';
         }
-        // Lógica para textos simples
         else if (['nombre', 'codigo_barras', 'estado'].includes(ordenActual.columna)) {
             valorA = (valorA || '').toString().toLowerCase();
             valorB = (valorB || '').toString().toLowerCase();
         }
-        // Lógica matemática para números
         else if (['precio', 'stock'].includes(ordenActual.columna)) {
             valorA = parseFloat(valorA) || 0;
             valorB = parseFloat(valorB) || 0;
         }
 
-        // Retornar según dirección (ascendente/descendente)
         if (valorA < valorB) return ordenActual.ascendente ? -1 : 1;
         if (valorA > valorB) return ordenActual.ascendente ? 1 : -1;
         return 0;
@@ -1052,13 +1113,22 @@ function mostrarNotificacion(mensaje, tipo = "success") {
     const toastDOM = document.getElementById('toastNotificacion');
     const toastMensaje = document.getElementById('toastMensaje');
     if (!toastDOM || !toastMensaje) return;
-    toastMensaje.textContent = mensaje;
+
+    let iconoHtml = '';
+    if (tipo === 'success') {
+        iconoHtml = '<i class="bi bi-check-circle-fill text-white fs-5 me-2"></i>'; 
+
+        iconoHtml = '<i class="bi bi-exclamation-triangle-fill text-white fs-5 me-2"></i>';
+    }
+
+    toastMensaje.innerHTML = `<div class="d-flex align-items-center">${iconoHtml} <span>${mensaje}</span></div>`;
+    
     toastDOM.className = `toast align-items-center text-white border-0 ${tipo === "success" ? "bg-success" : "bg-danger"}`;
     const toast = new bootstrap.Toast(toastDOM, { delay: 3000 });
     toast.show();
 }
 
-function mostrarModalConfirmacion(titulo, mensajeHTML, callbackAccion, textoBotonConfirmar = "Confirmar") {
+function mostrarModalConfirmacion(titulo, mensajeHTML, callbackAccion, textoBotonConfirmar = "Confirmar", tipo_alerta = "danger") {
     const modalDOM = document.getElementById('modalConfirmacionGenerico');
     const tituloDOM = document.getElementById('tituloModalConfirmacion');
     const mensajeDOM = document.getElementById('mensajeModalConfirmacion');
@@ -1071,6 +1141,38 @@ function mostrarModalConfirmacion(titulo, mensajeHTML, callbackAccion, textoBoto
 
     const nuevoBtnConfirmar = btnConfirmar.cloneNode(true);
     btnConfirmar.replaceWith(nuevoBtnConfirmar);
+
+    const icono = modalDOM.querySelector('i[class*="bi-"]'); 
+    
+    if (icono) {
+        const contenedorIcono = icono.parentElement;
+        
+        contenedorIcono.className = contenedorIcono.className.replace(/\bbg-[a-z]+(-subtle)?\b/g, '').replace(/\bbg-opacity-\d+\b/g, '').replace(/\btext-[a-z]+\b/g, '').trim();
+        contenedorIcono.style.backgroundColor = ''; 
+        icono.style.color = '';
+        
+        nuevoBtnConfirmar.classList.remove('btn-danger', 'btn-warning', 'boton_primario', 'text-white', 'text-dark');
+        nuevoBtnConfirmar.classList.add('border-0', 'fw-medium');
+        
+        if (tipo_alerta === 'warning') {
+            icono.className = 'bi bi-exclamation-triangle text-warning'; 
+            contenedorIcono.classList.add('bg-warning', 'bg-opacity-10'); 
+            nuevoBtnConfirmar.classList.add('btn-warning', 'text-dark');  
+            
+        } else if (tipo_alerta === 'info') {
+            icono.className = 'bi bi-question-circle'; 
+            icono.style.color = 'var(--color-primario)';
+            contenedorIcono.style.backgroundColor = 'var(--color-fondo-icono)';
+            nuevoBtnConfirmar.classList.add('boton_primario', 'text-white');
+            
+        } else {
+            icono.className = 'bi bi-exclamation-triangle text-danger'; 
+            contenedorIcono.classList.add('bg-danger', 'bg-opacity-10');
+            nuevoBtnConfirmar.classList.add('btn-danger', 'text-white');
+        }
+        
+        icono.style.fontSize = '3.5rem';
+    }
 
     const modalInstancia = bootstrap.Modal.getOrCreateInstance(modalDOM);
     modalDOM.addEventListener('hidden.bs.modal', () => {
@@ -1097,7 +1199,7 @@ function configurarModuloPOS() {
     cargarCategoriasPOS();
     cargarProductosPOS();
     configurarBuscadorPOS();
-    configurarCobroPOS(); 
+    configurarCobroPOS();
 }
 
 async function cargarCategoriasPOS() {
@@ -1355,7 +1457,7 @@ function eliminarDelCarritoPOS(id) {
 
 function actualizarTotalesPOS() {
     const subtotal = carritoPOS.reduce((suma, item) => suma + (item.precio * item.cantidad), 0);
-    const descuento = 0; 
+    const descuento = 0;
     const total = subtotal - descuento;
 
     document.getElementById('txtSubtotalPOS').textContent = `$${subtotal.toFixed(2)}`;
@@ -1380,12 +1482,11 @@ function configurarCobroPOS() {
             } else {
                 contenedorPagoCon.classList.add('d-none');
                 contenedorPagoCon.classList.remove('d-flex');
-                inputPagoCon.value = ''; 
+                inputPagoCon.value = '';
             }
         });
     });
 
-    // Botón Cancelar (Vaciar carrito)
     if (btnCancelar) {
         btnCancelar.addEventListener('click', () => {
             if (carritoPOS.length === 0) return;
@@ -1399,6 +1500,194 @@ function configurarCobroPOS() {
                     renderizarTicketPOS();
                 },
                 "Sí, vaciar"
+            );
+        });
+    }
+}
+
+/* ==========================================================================
+   ⚙️ MÓDULO 8: AJUSTES Y CONFIGURACIÓN (CON GUARDIA DE NAVEGACIÓN)
+   ========================================================================== */
+let archivoLogoSeleccionado = null;
+
+window.hayCambiosSinGuardar = false;
+window.colorGuardado = '#00a86b';
+window.modoOscuroGuardado = false;
+
+if (!window.guardiaNavegacionActivado) {
+    document.addEventListener('click', (e) => {
+        const navLink = e.target.closest('.nav-link');
+
+        if (navLink && window.hayCambiosSinGuardar && !navLink.classList.contains('active')) {
+            e.preventDefault();   
+            e.stopPropagation(); 
+
+            mostrarModalConfirmacion(
+                "Cambios sin guardar",
+                "Estuviste probando colores o el modo oscuro pero no has guardado. ¿Deseas descartar las pruebas y salir?",
+                () => {
+                    window.hayCambiosSinGuardar = false; 
+                    aplicarColorPrimario(window.colorGuardado);
+                    aplicarModoOscuro(window.modoOscuroGuardado);
+
+                    navLink.click();
+                },
+                "Descartar y salir",
+                "warning"
+            );
+        }
+    }, true); 
+    window.guardiaNavegacionActivado = true;
+}
+
+
+async function configurarModuloAjustes() {
+    const btnGuardar = document.getElementById('btnGuardarAjustes');
+    const dropZone = document.getElementById('dropZoneLogo');
+    const inputFile = document.getElementById('inputFileLogo');
+    const imgPreview = document.getElementById('imgPreviewLogo');
+    const textosLogo = document.getElementById('contenedorTextosLogo');
+    const contenedorPreview = document.getElementById('contenedorPreviewLogo');
+
+    window.hayCambiosSinGuardar = false;
+
+    const safeSet = (id, valor) => {
+        const elemento = document.getElementById(id);
+        if (elemento) elemento.value = valor;
+    };
+
+    // 1. Cargar datos actuales de la Base de Datos
+    try {
+        const res = await fetch('http://localhost:3000/api/negocio');
+        if (res.ok) {
+            const negocio = await res.json();
+
+            if (negocio.nombre) safeSet('inputNombreNegocio', negocio.nombre);
+            if (negocio.rfc) safeSet('inputRFC', negocio.rfc);
+            if (negocio.telefono) safeSet('inputTelefono', negocio.telefono);
+            if (negocio.direccion) safeSet('inputDireccion', negocio.direccion);
+            if (negocio.moneda) safeSet('selectMoneda', negocio.moneda);
+            if (negocio.impresora_ip) safeSet('inputImpresoraIP', negocio.impresora_ip);
+            if (negocio.color_primario) safeSet('contenedorColores', negocio.color_primario);
+
+            window.colorGuardado = negocio.color_primario || '#00a86b';
+            window.modoOscuroGuardado = negocio.modo_oscuro || false;
+
+            const sw = document.getElementById('switchModoOscuro');
+            if (sw) sw.checked = window.modoOscuroGuardado;
+
+            if (negocio.logo) {
+                if (imgPreview) imgPreview.src = `http://localhost:3000${negocio.logo}`;
+                if (contenedorPreview) contenedorPreview.classList.remove('d-none');
+                if (textosLogo) textosLogo.classList.add('d-none');
+            }
+        }
+    } catch (e) {
+        console.error("Error al cargar ajustes:", e);
+    }
+
+    const inputColor = document.getElementById('contenedorColores');
+    if (inputColor) {
+        inputColor.addEventListener('input', (e) => {
+            window.hayCambiosSinGuardar = true; 
+            aplicarColorPrimario(e.target.value);
+        });
+    }
+
+    const switchOscuro = document.getElementById('switchModoOscuro');
+    if (switchOscuro) {
+        switchOscuro.addEventListener('change', (e) => {
+            window.hayCambiosSinGuardar = true;
+            aplicarModoOscuro(e.target.checked);
+        });
+    }
+
+    // 2. Lógica de Drag & Drop para el Logo
+    const procesarLogo = (file) => {
+        if (!file || !file.type.startsWith('image/')) return mostrarNotificacion("Sube una imagen válida", "error");
+        archivoLogoSeleccionado = file;
+        window.hayCambiosSinGuardar = true; 
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            if (imgPreview) imgPreview.src = e.target.result;
+            if (contenedorPreview) contenedorPreview.classList.remove('d-none');
+            if (textosLogo) textosLogo.classList.add('d-none');
+        };
+        reader.readAsDataURL(file);
+    };
+
+    dropZone?.addEventListener('click', () => inputFile?.click());
+    dropZone?.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.style.borderColor = 'var(--color-primario)'; });
+    dropZone?.addEventListener('dragleave', () => dropZone.style.borderColor = '#cbd5e1');
+    dropZone?.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.style.borderColor = '#cbd5e1';
+        if (e.dataTransfer.files.length) procesarLogo(e.dataTransfer.files[0]);
+    });
+
+    inputFile?.addEventListener('change', function () {
+        if (this.files.length) procesarLogo(this.files[0]);
+    });
+
+    // 3. Lógica de Guardar Cambios
+    if (btnGuardar) {
+        const nuevoBtnGuardar = btnGuardar.cloneNode(true);
+        btnGuardar.replaceWith(nuevoBtnGuardar);
+
+        nuevoBtnGuardar.addEventListener('click', () => {
+            mostrarModalConfirmacion(
+                "Guardar Ajustes",
+                "¿Estás seguro de que deseas actualizar los datos y configuración de tu negocio?",
+                async () => {
+                    const iNombre = document.getElementById('inputNombreNegocio');
+                    const nombre = iNombre ? iNombre.value.trim() : '';
+
+                    if (!nombre) {
+                        if (iNombre) marcarInputConError(iNombre);
+                        return mostrarNotificacion("El Nombre Comercial es obligatorio", "error");
+                    }
+
+                    const formData = new FormData();
+                    formData.append('nombre', nombre);
+                    formData.append('rfc', document.getElementById('inputRFC')?.value.trim() || '');
+                    formData.append('telefono', document.getElementById('inputTelefono')?.value.trim() || '');
+                    formData.append('direccion', document.getElementById('inputDireccion')?.value.trim() || '');
+
+                    const moneda = document.getElementById('selectMoneda')?.value;
+                    const impresoraIP = document.getElementById('inputImpresoraIP')?.value.trim();
+                    const colorPrimario = document.getElementById('contenedorColores')?.value;
+                    const modoOscuro = document.getElementById('switchModoOscuro')?.checked;
+
+                    if (moneda) formData.append('moneda', moneda);
+                    if (impresoraIP !== undefined) formData.append('impresora_ip', impresoraIP);
+                    if (colorPrimario) formData.append('color_primario', colorPrimario);
+                    formData.append('modo_oscuro', modoOscuro);
+
+                    if (archivoLogoSeleccionado) formData.append('logo', archivoLogoSeleccionado);
+
+                    try {
+                        const response = await fetch('http://localhost:3000/api/negocio', {
+                            method: 'PUT',
+                            body: formData
+                        });
+
+                        if (response.ok) {
+                            window.colorGuardado = colorPrimario;
+                            window.modoOscuroGuardado = modoOscuro;
+                            window.hayCambiosSinGuardar = false;
+
+                            mostrarNotificacion("Configuración actualizada correctamente", "success");
+                            cargarDatosNegocioGlobal();
+                        } else {
+                            mostrarNotificacion("Error al guardar ajustes", "error");
+                        }
+                    } catch (error) {
+                        mostrarNotificacion("Error de conexión", "error");
+                    }
+                },
+                "Sí, guardar",
+                "info"
             );
         });
     }

@@ -2,7 +2,7 @@
 
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h4 class="fw-bold text-dark mb-0">Ajustes del Sistema</h4>
-        <button class="btn boton_primario px-4 fw-medium d-flex align-items-center">
+        <button id="btnGuardarAjustes" class="btn boton_primario px-4 fw-medium d-flex align-items-center">
             <i class="bi bi-save me-2"></i> Guardar Cambios
         </button>
     </div>
@@ -19,14 +19,25 @@
 
                 <div class="row g-4">
                     <div class="col-12 col-md-5">
-                        <div
-                            class="zona_subir_logo d-flex flex-column align-items-center justify-content-center p-4 text-center cursor-pointer h-100">
-                            <div class="icono_upload bg-white shadow-sm rounded-circle mb-3 d-flex align-items-center justify-content-center text-secondary"
-                                style="width: 55px; height: 55px;">
-                                <i class="bi bi-shop fs-4"></i>
+                        <div id="dropZoneLogo"
+                            class="zona_subir_logo d-flex flex-column align-items-center justify-content-center p-4 text-center cursor-pointer h-100 position-relative"
+                            style="border: 2px dashed #cbd5e1 !important; background-color: #f8fafc; border-radius: var(--radio-borde-elementos);">
+                            <input type="file" id="inputFileLogo" accept="image/*" class="d-none">
+
+                            <div id="contenedorTextosLogo">
+                                <div class="icono_upload bg-white shadow-sm rounded-circle mb-3 d-flex align-items-center justify-content-center text-secondary mx-auto"
+                                    style="width: 55px; height: 55px;">
+                                    <i class="bi bi-cloud-arrow-up fs-4 text-primary"></i>
+                                </div>
+                                <h6 class="fw-bold text-dark mb-1">Subir Logo</h6>
+                                <p class="text-muted small mb-0">PNG, JPG, WEBP</p>
                             </div>
-                            <span class="fw-medium text-dark">Subir Logo</span>
-                            <small class="text-muted mt-1">PNG, JPG hasta 2MB</small>
+
+                            <div id="contenedorPreviewLogo"
+                                class="d-none position-absolute top-0 start-0 w-100 h-100 bg-white"
+                                style="border-radius: var(--radio-borde-elementos);">
+                                <img id="imgPreviewLogo" src="" class="w-100 h-100 p-2" style="object-fit: contain;">
+                            </div>
                         </div>
                     </div>
 
@@ -37,7 +48,7 @@
                                 <span class="input-group-text bg-transparent border-end-0 text-muted"><i
                                         class="bi bi-shop-window"></i></span>
                                 <input type="text" class="form-control border-start-0 ps-0 shadow-none"
-                                    value="Mi Negocio POS">
+                                    placeholder="Ej: Mi Negocio" id="inputNombreNegocio">
                             </div>
                         </div>
                         <div>
@@ -46,7 +57,7 @@
                                 <span class="input-group-text bg-transparent border-end-0 text-muted"><i
                                         class="bi bi-file-earmark-text"></i></span>
                                 <input type="text" class="form-control border-start-0 ps-0 shadow-none"
-                                    placeholder="EJ. XAXX010101000">
+                                    placeholder="EJ. XAXX010101000" id="inputRFC">
                             </div>
                         </div>
                     </div>
@@ -57,7 +68,7 @@
                             <span class="input-group-text bg-transparent border-end-0 text-muted"><i
                                     class="bi bi-geo-alt"></i></span>
                             <input type="text" class="form-control border-start-0 ps-0 shadow-none"
-                                value="Av. Principal 123, Centro, 00000 Ciudad, Estado">
+                                placeholder="Calle, Número, Colonia, Ciudad" id="inputDireccion">
                         </div>
                     </div>
 
@@ -66,8 +77,8 @@
                         <div class="input-group input_ajustes">
                             <span class="input-group-text bg-transparent border-end-0 text-muted"><i
                                     class="bi bi-phone"></i></span>
-                            <input type="text" class="form-control border-start-0 ps-0 shadow-none"
-                                value="555-0123-456">
+                            <input type="text" class="form-control border-start-0 ps-0 shadow-none" placeholder="10 dígitos"
+                                id="inputTelefono">
                         </div>
                     </div>
                 </div>
@@ -88,10 +99,10 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <p class="fw-medium text-dark mb-0">Moneda Principal</p>
-                            <small class="text-muted">MXN ($)</small>
+                           
                         </div>
-                        <select class="form-select select_ajustes w-auto shadow-none fw-medium">
-                            <option value="MXN" selected>MXN</option>
+                        <select class="form-select select_ajustes w-auto shadow-none fw-medium" id="selectMoneda">
+                            <option value="MXN">MXN</option>
                             <option value="USD">USD</option>
                             <option value="EUR">EUR</option>
                         </select>
@@ -103,7 +114,7 @@
                         <div class="d-flex justify-content-between align-items-center mb-1">
                             <p class="fw-medium text-dark mb-0">IP de Impresora Térmica</p>
                             <input type="text" class="form-control shadow-none input_ip text-center fw-medium"
-                                placeholder="192.168.1.100" style="max-width: 140px;">
+                                placeholder="192.168.1.100" style="max-width: 140px;" id="inputImpresoraIP">
                         </div>
                         <small class="text-muted">Ingresa la dirección IPv4 local para imprimir tickets por red.</small>
                     </div>
@@ -116,7 +127,7 @@
                             <small class="text-muted">Cambia el color verde por defecto al tono de tu marca.</small>
                         </div>
                         <input type="color" class="form-control form-control-color input_color shadow-none"
-                            value="#00a86b" title="Elige tu color">
+                            value="#00a86b" title="Elige tu color" id="contenedorColores">
                     </div>
 
                     <hr class="m-0 border-light">
@@ -129,7 +140,7 @@
                         </div>
                         <div class="form-check form-switch fs-4 mb-0">
                             <input class="form-check-input switch_ajustes shadow-none cursor-pointer" type="checkbox"
-                                role="switch">
+                                role="switch" id="switchModoOscuro">
                         </div>
                     </div>
 

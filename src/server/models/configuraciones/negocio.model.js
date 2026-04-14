@@ -24,6 +24,21 @@ export const Negocio = database.define(
         },
         logo: {
             type: DataTypes.STRING(255)
+        },
+        moneda: {
+            type: DataTypes.STRING(10),
+            defaultValue: 'MXN'
+        },
+        impresora_ip: {
+            type: DataTypes.STRING(50)
+        },
+        modo_oscuro: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
+        color_primario: {
+            type: DataTypes.STRING(20),
+            defaultValue: '#00a86b'
         }
     }, {
     tableName: "negocios",

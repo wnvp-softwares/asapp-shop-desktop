@@ -22,6 +22,199 @@
     --fuente-principal: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
+/* =========================================
+   DEFINICIÓN DEL MODO OSCURO Y SOBREESCRITURAS
+   ========================================= */
+[data-theme="dark"] {
+    --color-fondo-pagina: #0f172a;    /* Azul muy oscuro (Navy) */
+    --color-fondo-tarjeta: #1e293b;   /* Gris azulado para las cajas */
+    --color-fondo-input: #0f172a;     /* Cajas de texto oscuras */
+    --color-borde-input: #334155;     /* Bordes sutiles */
+    --color-texto-principal: #f8fafc; /* Blanco hueso para lectura cómoda */
+    --color-texto-secundario: #94a3b8; /* Gris azulado claro para textos tenues */
+}
+
+/* 1. Fondo general de la aplicación y Login */
+body[data-theme="dark"],
+body[data-theme="dark"].fondo_principal {
+    background-color: var(--color-fondo-pagina) !important;
+    color: var(--color-texto-principal) !important;
+}
+
+/* 2. Tarjetas, Menú Lateral, MODALES y Contenedores */
+body[data-theme="dark"] .bg-white,
+body[data-theme="dark"] .bg-light,
+body[data-theme="dark"] .menu_lateral,
+body[data-theme="dark"] .tarjeta_ajustes,
+body[data-theme="dark"] .tarjeta_seccion,
+body[data-theme="dark"] .tarjeta_seccion > div:not(.modal), /* 🌟 EL FIX ESTÁ AQUÍ (Excluimos el modal) */
+body[data-theme="dark"] .tarjeta_categoria,    
+body[data-theme="dark"] .tarjeta_reporte,      
+body[data-theme="dark"] .tarjeta_login,
+body[data-theme="dark"] .modal-content {
+    background-color: var(--color-fondo-tarjeta) !important;
+    border-color: var(--color-borde-input) !important;
+}
+
+.tarjeta_seccion .text-success,
+.tarjeta_ajustes .text-success,
+.menu_lateral .text-success,
+.modal-content .text-success,
+.tarjeta_login .text-success {
+    color: var(--color-primario) !important;
+}
+
+/* Si tienes píldoras, fondos o badges verdes, también los sincronizamos */
+.tarjeta_seccion .bg-success,
+.modal-content .bg-success,
+.menu_lateral .bg-success {
+    background-color: var(--color-primario) !important;
+    color: #ffffff !important;
+}
+
+/* 2.5 Cabeceras de Modal, Botón "X" de cerrar y Botones "Cancelar" */
+body[data-theme="dark"] .modal-header,
+body[data-theme="dark"] .modal-footer {
+    border-color: var(--color-borde-input) !important;
+}
+body[data-theme="dark"] .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+body[data-theme="dark"] .btn-light {
+    background-color: var(--color-fondo-input) !important;
+    border-color: var(--color-borde-input) !important;
+    color: var(--color-texto-principal) !important;
+}
+body[data-theme="dark"] .btn-light:hover {
+    background-color: var(--color-borde-input) !important;
+}
+
+/* 3. Textos Generales */
+body[data-theme="dark"] .text-dark {
+    color: var(--color-texto-principal) !important;
+}
+body[data-theme="dark"] .text-muted,
+body[data-theme="dark"] .text-secondary {
+    color: var(--color-texto-secundario) !important;
+}
+
+/* 4. Cajas de texto, Inputs y Zonas de Subida */
+body[data-theme="dark"] .form-control,
+body[data-theme="dark"] .form-select,
+body[data-theme="dark"] .input-group-text,
+body[data-theme="dark"] .input_ip,
+body[data-theme="dark"] .zona_subir_logo,
+body[data-theme="dark"] .zona_subida_imagen {
+    background-color: var(--color-fondo-input) !important;
+    border-color: var(--color-borde-input) !important;
+    color: var(--color-texto-principal) !important;
+}
+body[data-theme="dark"] .form-control::placeholder,
+body[data-theme="dark"] .input_ip::placeholder {
+    color: var(--color-texto-secundario) !important;
+    opacity: 0.6;
+}
+
+/* 4.5 ELEMENTOS DEL POS (Píldoras, Carrito, Botones de Pago) */
+body[data-theme="dark"] .pildora_categoria:not(.activa),
+body[data-theme="dark"] .tarjeta_item_ticket,
+body[data-theme="dark"] .control_cantidad_pos,
+body[data-theme="dark"] .btn_cant_pos,
+body[data-theme="dark"] .boton_metodo_pago:not(.activa) {
+    background-color: var(--color-fondo-input) !important;
+    border-color: var(--color-borde-input) !important;
+    color: var(--color-texto-principal) !important;
+}
+body[data-theme="dark"] .btn_cant_pos:hover,
+body[data-theme="dark"] .boton_metodo_pago:not(.activa):hover {
+    background-color: var(--color-borde-input) !important;
+}
+
+/* 5. REPARACIÓN DE TABLAS */
+body[data-theme="dark"] .table {
+    border-color: var(--color-borde-input) !important;
+}
+body[data-theme="dark"] .table thead th,
+body[data-theme="dark"] .table tbody td,
+body[data-theme="dark"] .table th {
+    background-color: var(--color-fondo-tarjeta) !important;
+    color: var(--color-texto-principal) !important;
+    border-color: var(--color-borde-input) !important;
+}
+body[data-theme="dark"] .table-hover tbody tr:hover td {
+    background-color: var(--color-fondo-input) !important; 
+}
+body[data-theme="dark"] .pildora_categoria_tabla {    /* 🌟 REPARA LA PÍLDORA EN LA TABLA DE PRODUCTOS */
+    background-color: var(--color-fondo-input) !important;
+    color: var(--color-texto-principal) !important;
+    border: 1px solid var(--color-borde-input) !important;
+}
+
+body[data-theme="dark"] .modal-backdrop.show {
+    background-color: #000000 !important; /* Negro puro para oscurecer el fondo */
+    opacity: 0.6 !important; /* 🌟 Bajamos la opacidad para recuperar la transparencia */
+}
+
+body[data-theme="dark"] .modal-content {
+    /* Mantenemos la sombra pesada para que el modal "flote" sobre el fondo transparente */
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8) !important; 
+}
+
+/* 6. HOVER Y LISTAS DINÁMICAS (Usuarios) */
+body[data-theme="dark"] .item_usuario_lista {
+    background-color: var(--color-fondo-tarjeta) !important;
+    border-color: var(--color-borde-input) !important;
+}
+body[data-theme="dark"] .item_usuario_lista.activa {
+    background-color: var(--color-fondo-input) !important;
+    border-left-color: var(--color-primario) !important;
+}
+body[data-theme="dark"] .nav-link:hover,
+body[data-theme="dark"] .item_usuario_lista:hover:not(.activa),
+body[data-theme="dark"] .tarjeta_producto:hover {
+    background-color: var(--color-fondo-input) !important;
+    color: var(--color-texto-principal) !important;
+}
+
+/* 7. Líneas Divisorias */
+body[data-theme="dark"] .border,
+body[data-theme="dark"] .border-end,
+body[data-theme="dark"] .border-bottom,
+body[data-theme="dark"] hr {
+    border-color: var(--color-borde-input) !important;
+}
+
+/* 8. BOTONES DE ACCIÓN (Usuarios) */
+body[data-theme="dark"] [class*="btn_editar"],
+body[data-theme="dark"] .table .btn-outline-secondary,
+body[data-theme="dark"] .table .btn-outline-primary,
+body[data-theme="dark"] .table .btn-light {
+    background-color: var(--color-fondo-input) !important;
+    border-color: var(--color-borde-input) !important;
+    color: var(--color-texto-principal) !important;
+}
+body[data-theme="dark"] [class*="btn_editar"]:hover,
+body[data-theme="dark"] .table .btn-outline-secondary:hover,
+body[data-theme="dark"] .table .btn-outline-primary:hover,
+body[data-theme="dark"] .table .btn-light:hover {
+    background-color: var(--color-borde-input) !important;
+}
+
+/* Atrapamos cualquier botón de "Eliminar" o botones de peligro (danger) */
+body[data-theme="dark"] [class*="btn_eliminar"],
+body[data-theme="dark"] .table .btn-outline-danger,
+body[data-theme="dark"] .table .btn-danger {
+    background-color: rgba(239, 68, 68, 0.1) !important; /* Fondo rojo muy tenue */
+    border-color: rgba(239, 68, 68, 0.2) !important;
+    color: #fca5a5 !important; /* Texto rojo claro */
+}
+body[data-theme="dark"] [class*="btn_eliminar"]:hover,
+body[data-theme="dark"] .table .btn-outline-danger:hover,
+body[data-theme="dark"] .table .btn-danger:hover {
+    background-color: rgba(239, 68, 68, 0.2) !important;
+    color: #fecaca !important;
+}
+
 /* Configuraciones Base */
 body {
     font-family: var(--fuente-principal);
@@ -725,11 +918,33 @@ body {
    DETALLE DE USUARIO (PANEL DERECHO)
    ========================================= */
 
-/* Ajuste sutil al avatar de la lista cuando está activo (Como en tu boceto) */
+/* Estilo base del avatar (siempre usa el color de la paleta) */
+.avatar_iniciales {
+    background-color: var(--color-fondo-icono) !important;
+    color: var(--color-primario) !important;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: all 0.3s ease; /* Para que el cambio de color sea suave */
+}
+
+/* Cuando el usuario está seleccionado (Activo) */
 .item_usuario_lista.activa .avatar_iniciales {
-    background-color: #d1fae5;
-    color: var(--color-primario);
-    box-shadow: none;
+    /* Aquí invertimos: fondo fuerte y letra blanca para que resalte */
+    background-color: var(--color-primario) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Ajuste al contenedor del item cuando está activo */
+.item_usuario_lista.activa {
+    background-color: #ffffff !important;
+    border-left: 4px solid var(--color-primario) !important;
 }
 
 .avatar_grande {
@@ -958,4 +1173,9 @@ select.boton_filtro:focus {
 .btn-eliminar-carrito:hover i.hover-danger {
     color: #dc2626 !important; 
     transform: scale(1.15); 
+}
+
+.avatar_dinamico {
+    background-color: var(--color-fondo-icono) !important;
+    color: var(--color-primario) !important;
 }

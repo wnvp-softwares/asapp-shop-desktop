@@ -10,7 +10,11 @@ create table negocios (
     direccion varchar(255),
     telefono varchar(20),
     rfc varchar(20),
-    logo varchar(255)
+    logo varchar(255),
+    moneda varchar(10) default 'MXN',
+    impresora_ip varchar(50),
+    modo_oscuro boolean default false,
+    color_primario varchar(20) default '#00a86b'
 );
 
 -- =========================
