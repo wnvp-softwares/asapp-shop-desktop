@@ -210,6 +210,7 @@ function cargarVista(nombreArchivo) {
         else if (nombreArchivo === 'productos.html') setTimeout(() => configurarModuloProductos(), 50);
         else if (nombreArchivo === 'ventas.html') setTimeout(() => configurarModuloPOS(), 50);
         else if (nombreArchivo === 'ajustes.html') setTimeout(() => configurarModuloAjustes(), 50);
+        else if (nombreArchivo === 'compras.html') setTimeout(() => configurarModuloCompras(), 50);
 
     } catch (error) {
         console.error(`Error al cargar la vista ${nombreArchivo}:`, error);
@@ -702,7 +703,7 @@ let imagenEliminada = false;
 let ordenActual = { columna: 'nombre', ascendente: true };
 
 function configurarModuloProductos() {
-    configurarOrdenamientoTabla(); 
+    configurarOrdenamientoTabla();
     cargarProductos();
     configurarBuscadorYFiltroProductos();
     configurarModalesProducto();
@@ -1116,13 +1117,13 @@ function mostrarNotificacion(mensaje, tipo = "success") {
 
     let iconoHtml = '';
     if (tipo === 'success') {
-        iconoHtml = '<i class="bi bi-check-circle-fill text-white fs-5 me-2"></i>'; 
+        iconoHtml = '<i class="bi bi-check-circle-fill text-white fs-5 me-2"></i>';
 
         iconoHtml = '<i class="bi bi-exclamation-triangle-fill text-white fs-5 me-2"></i>';
     }
 
     toastMensaje.innerHTML = `<div class="d-flex align-items-center">${iconoHtml} <span>${mensaje}</span></div>`;
-    
+
     toastDOM.className = `toast align-items-center text-white border-0 ${tipo === "success" ? "bg-success" : "bg-danger"}`;
     const toast = new bootstrap.Toast(toastDOM, { delay: 3000 });
     toast.show();
@@ -1142,35 +1143,35 @@ function mostrarModalConfirmacion(titulo, mensajeHTML, callbackAccion, textoBoto
     const nuevoBtnConfirmar = btnConfirmar.cloneNode(true);
     btnConfirmar.replaceWith(nuevoBtnConfirmar);
 
-    const icono = modalDOM.querySelector('i[class*="bi-"]'); 
-    
+    const icono = modalDOM.querySelector('i[class*="bi-"]');
+
     if (icono) {
         const contenedorIcono = icono.parentElement;
-        
+
         contenedorIcono.className = contenedorIcono.className.replace(/\bbg-[a-z]+(-subtle)?\b/g, '').replace(/\bbg-opacity-\d+\b/g, '').replace(/\btext-[a-z]+\b/g, '').trim();
-        contenedorIcono.style.backgroundColor = ''; 
+        contenedorIcono.style.backgroundColor = '';
         icono.style.color = '';
-        
+
         nuevoBtnConfirmar.classList.remove('btn-danger', 'btn-warning', 'boton_primario', 'text-white', 'text-dark');
         nuevoBtnConfirmar.classList.add('border-0', 'fw-medium');
-        
+
         if (tipo_alerta === 'warning') {
-            icono.className = 'bi bi-exclamation-triangle text-warning'; 
-            contenedorIcono.classList.add('bg-warning', 'bg-opacity-10'); 
-            nuevoBtnConfirmar.classList.add('btn-warning', 'text-dark');  
-            
+            icono.className = 'bi bi-exclamation-triangle text-warning';
+            contenedorIcono.classList.add('bg-warning', 'bg-opacity-10');
+            nuevoBtnConfirmar.classList.add('btn-warning', 'text-dark');
+
         } else if (tipo_alerta === 'info') {
-            icono.className = 'bi bi-question-circle'; 
+            icono.className = 'bi bi-question-circle';
             icono.style.color = 'var(--color-primario)';
             contenedorIcono.style.backgroundColor = 'var(--color-fondo-icono)';
             nuevoBtnConfirmar.classList.add('boton_primario', 'text-white');
-            
+
         } else {
-            icono.className = 'bi bi-exclamation-triangle text-danger'; 
+            icono.className = 'bi bi-exclamation-triangle text-danger';
             contenedorIcono.classList.add('bg-danger', 'bg-opacity-10');
             nuevoBtnConfirmar.classList.add('btn-danger', 'text-white');
         }
-        
+
         icono.style.fontSize = '3.5rem';
     }
 
@@ -1519,14 +1520,14 @@ if (!window.guardiaNavegacionActivado) {
         const navLink = e.target.closest('.nav-link');
 
         if (navLink && window.hayCambiosSinGuardar && !navLink.classList.contains('active')) {
-            e.preventDefault();   
-            e.stopPropagation(); 
+            e.preventDefault();
+            e.stopPropagation();
 
             mostrarModalConfirmacion(
                 "Cambios sin guardar",
                 "Estuviste probando colores o el modo oscuro pero no has guardado. ¿Deseas descartar las pruebas y salir?",
                 () => {
-                    window.hayCambiosSinGuardar = false; 
+                    window.hayCambiosSinGuardar = false;
                     aplicarColorPrimario(window.colorGuardado);
                     aplicarModoOscuro(window.modoOscuroGuardado);
 
@@ -1536,10 +1537,9 @@ if (!window.guardiaNavegacionActivado) {
                 "warning"
             );
         }
-    }, true); 
+    }, true);
     window.guardiaNavegacionActivado = true;
 }
-
 
 async function configurarModuloAjustes() {
     const btnGuardar = document.getElementById('btnGuardarAjustes');
@@ -1556,7 +1556,6 @@ async function configurarModuloAjustes() {
         if (elemento) elemento.value = valor;
     };
 
-    // 1. Cargar datos actuales de la Base de Datos
     try {
         const res = await fetch('http://localhost:3000/api/negocio');
         if (res.ok) {
@@ -1589,7 +1588,7 @@ async function configurarModuloAjustes() {
     const inputColor = document.getElementById('contenedorColores');
     if (inputColor) {
         inputColor.addEventListener('input', (e) => {
-            window.hayCambiosSinGuardar = true; 
+            window.hayCambiosSinGuardar = true;
             aplicarColorPrimario(e.target.value);
         });
     }
@@ -1602,11 +1601,10 @@ async function configurarModuloAjustes() {
         });
     }
 
-    // 2. Lógica de Drag & Drop para el Logo
     const procesarLogo = (file) => {
         if (!file || !file.type.startsWith('image/')) return mostrarNotificacion("Sube una imagen válida", "error");
         archivoLogoSeleccionado = file;
-        window.hayCambiosSinGuardar = true; 
+        window.hayCambiosSinGuardar = true;
 
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -1630,7 +1628,6 @@ async function configurarModuloAjustes() {
         if (this.files.length) procesarLogo(this.files[0]);
     });
 
-    // 3. Lógica de Guardar Cambios
     if (btnGuardar) {
         const nuevoBtnGuardar = btnGuardar.cloneNode(true);
         btnGuardar.replaceWith(nuevoBtnGuardar);
@@ -1691,4 +1688,387 @@ async function configurarModuloAjustes() {
             );
         });
     }
+}
+
+/* ==========================================================================
+   📦 MÓDULO: COMPRAS Y PROVEEDORES
+   ========================================================================== */
+let listaProductosGlobal = [];
+let listaProveedoresGlobal = [];
+let listaComprasData = [];
+
+async function cargarListaComprasGlobales() {
+    try {
+        const res = await fetch('http://localhost:3000/api/compras');
+        if (res.ok) {
+            listaComprasData = await res.json(); // Guardamos en memoria global
+            renderizarTablaCompras(listaComprasData); // Dibujamos la primera vez
+        }
+    } catch (error) {
+        console.error("Error al cargar la tabla principal:", error);
+    }
+}
+
+async function cargarProductosParaCompra() {
+    try {
+        const res = await fetch('http://localhost:3000/api/productos');
+        if (res.ok) {
+            listaProductosGlobal = await res.json();
+        }
+    } catch (e) { console.error("Error al cargar productos para el combobox"); }
+}
+
+async function cargarProveedoresParaCompra() {
+    try {
+        const res = await fetch('http://localhost:3000/api/proveedores');
+        if (res.ok) {
+            listaProveedoresGlobal = await res.json();
+            
+            const selectProvModal = document.getElementById('selectProveedorCompra');
+            if (selectProvModal) {
+                selectProvModal.innerHTML = '<option value="" selected disabled>Selecciona un proveedor...</option>';
+                listaProveedoresGlobal.forEach(prov => {
+                    selectProvModal.innerHTML += `<option value="${prov.id_proveedor}">${prov.nombre}</option>`;
+                });
+            }
+
+            const selectFiltroProv = document.getElementById('selectFiltroProveedorCompra');
+            if (selectFiltroProv) {
+                selectFiltroProv.innerHTML = '<option value="Todos" selected>Todos</option>';
+                listaProveedoresGlobal.forEach(prov => {
+                    selectFiltroProv.innerHTML += `<option value="${prov.id_proveedor}">${prov.nombre}</option>`;
+                });
+            }
+        }
+    } catch (e) { console.error("Error al cargar proveedores"); }
+}
+
+function renderizarTablaCompras(comprasParaMostrar) {
+    const tbody = document.getElementById('tbodyListaCompras');
+    if (!tbody) return;
+    tbody.innerHTML = ''; 
+
+    if(comprasParaMostrar.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" class="text-center text-muted py-5">No se encontraron compras con estos filtros</td></tr>`;
+        return;
+    }
+
+    comprasParaMostrar.forEach(compra => {
+        const idFormateado = `COMP-${compra.id_compra.toString().padStart(3, '0')}`;
+        const fechaStr = new Date(compra.fecha).toISOString().split('T')[0];
+        const nombreProv = compra.proveedor ? compra.proveedor.nombre : 'S/N';
+        
+        const esPagado = compra.estado === 'pagado'; 
+        const clasePildora = esPagado ? 'pagado' : 'pendiente';
+        const textoPildora = esPagado ? 'PAGADO' : 'PENDIENTE';
+
+        const htmlLlegada = compra.recibido 
+            ? `<div class="circulo_llegada completado mx-auto"><i class="bi bi-check2"></i></div>`
+            : `<div class="circulo_llegada vacio mx-auto"></div>`;
+
+        const tr = document.createElement('tr');
+        tr.className = 'fila_compra';
+        tr.innerHTML = `
+            <td class="id_compra_texto ps-4">${idFormateado}</td>
+            <td>
+                <div class="fw-bold text-dark">${nombreProv}</div>
+                <div class="text-secondary d-flex align-items-center mt-1" style="font-size: 0.8rem;">
+                    <i class="bi bi-clock me-1"></i> ${fechaStr}
+                </div>
+            </td>
+            <td><span class="pildora_estado ${clasePildora}">${textoPildora}</span></td>
+            <td class="fw-bold text-success_custom">$${parseFloat(compra.monto_pagado || 0).toFixed(2)}</td>
+            <td class="fw-bold text-danger_custom">$${parseFloat(compra.monto_deuda || 0).toFixed(2)}</td>
+            <td class="fw-bold text-dark">$${parseFloat(compra.total || 0).toFixed(2)}</td>
+            <td>${htmlLlegada}</td>
+            <td class="text-end pe-4 text-secondary"><i class="bi bi-chevron-right cursor-pointer hover-scale"></i></td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+function configurarModuloCompras() {
+    cargarProveedoresParaCompra();
+    cargarListaComprasGlobales();
+
+    const inputBuscar = document.getElementById('inputBuscarCompra');
+    const selectEstado = document.getElementById('selectFiltroEstadoCompra');
+    const selectProv = document.getElementById('selectFiltroProveedorCompra');
+    const inputFecha = document.getElementById('inputFiltroFechaCompra');
+
+    if(inputBuscar) inputBuscar.addEventListener('input', aplicarFiltrosCompras);
+    if(selectEstado) selectEstado.addEventListener('change', aplicarFiltrosCompras);
+    if(selectProv) selectProv.addEventListener('change', aplicarFiltrosCompras);
+    if(inputFecha) inputFecha.addEventListener('change', aplicarFiltrosCompras);
+
+    const btnNuevoProveedor = document.getElementById('btnNuevoProveedor');
+    const formProveedor = document.getElementById('formProveedorData');
+
+    let modalProvInstancia = null;
+    const modalDOM = document.getElementById('modalNuevoProveedor');
+
+
+    if (modalDOM) modalProvInstancia = new bootstrap.Modal(modalDOM);
+
+    if (btnNuevoProveedor) {
+        btnNuevoProveedor.addEventListener('click', () => {
+            formProveedor.reset();
+            limpiarErroresInputs('inputCompania');
+            modalProvInstancia.show();
+        });
+    }
+
+    if (formProveedor) {
+        formProveedor.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // 1. Referencias a los campos
+            const iCompania = document.getElementById('inputCompania');
+            const iTelefono = document.getElementById('inputTelefonoProv');
+            const iEmail = document.getElementById('inputEmailProv');
+
+
+            limpiarErroresInputs('inputCompania');
+
+            const nombre = iCompania.value.trim();
+            const telefono = iTelefono.value.trim();
+            const correo = iEmail.value.trim();
+
+            if (nombre === '') {
+                marcarInputConError(iCompania);
+                return mostrarNotificacion("El nombre de la compañía es obligatorio", "error");
+            }
+
+            const diasSeleccionados = [];
+            document.querySelectorAll('.check_dia:checked').forEach(checkbox => {
+                diasSeleccionados.push(checkbox.value);
+            });
+
+            const datosProveedor = {
+                nombre: nombre,
+                telefono: telefono,
+                correo: correo,
+                dias_entrega: JSON.stringify(diasSeleccionados)
+            };
+
+            try {
+                const response = await fetch('http://localhost:3000/api/proveedores', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(datosProveedor)
+                });
+
+                if (response.ok) {
+                    mostrarNotificacion("Proveedor registrado exitosamente", "success");
+                    modalProvInstancia.hide();
+
+                    cargarProveedoresParaCompra();
+                } else {
+                    const data = await response.json();
+                    mostrarNotificacion(data.message || "Error al registrar el proveedor", "error");
+                }
+            } catch (error) {
+                console.error("Error de conexión:", error);
+                mostrarNotificacion("Error al conectar con el servidor", "error");
+            }
+        });
+    }
+
+    const btnNuevaCompra = document.getElementById('btnNuevaCompra');
+    const tbodyCompra = document.getElementById('tbodyProductosCompra');
+    const btnAgregarFila = document.getElementById('btnAgregarFilaCompra');
+
+    let modalCompraInstancia = null;
+    const modalCompraDOM = document.getElementById('modalNuevaCompra');
+    if (modalCompraDOM) modalCompraInstancia = new bootstrap.Modal(modalCompraDOM);
+
+    const formatearMoneda = (valor) => '$' + parseFloat(valor).toFixed(2);
+
+    const calcularTotalesCompra = () => {
+        let total = 0;
+        const filas = tbodyCompra.querySelectorAll('tr');
+        filas.forEach(fila => {
+            const costo = parseFloat(fila.querySelector('.input_costo').value) || 0;
+            const cant = parseFloat(fila.querySelector('.input_cant').value) || 0;
+            const subtotal = costo * cant;
+            fila.querySelector('.txt_subtotal_fila').textContent = formatearMoneda(subtotal);
+            total += subtotal;
+        });
+        document.getElementById('txtSubtotalCompra').textContent = formatearMoneda(total);
+        document.getElementById('txtTotalCompra').textContent = formatearMoneda(total);
+    };
+
+    const crearFilaCompra = () => {
+        const tr = document.createElement('tr');
+        tr.className = "border-bottom";
+
+        let opcionesProductos = `<option value="" selected disabled>Seleccionar producto...</option>`;
+        listaProductosGlobal.forEach(p => {
+            opcionesProductos += `<option value="${p.id_producto}">${p.nombre}</option>`;
+        });
+
+        tr.innerHTML = `
+            <td class="ps-3 py-3">
+                <select class="form-select select_ajustes shadow-none select_producto_compra">
+                    ${opcionesProductos}
+                </select>
+            </td>
+            <td>
+                <div class="input-group input_ajustes">
+                    <span class="input-group-text bg-transparent border-end-0 text-muted">$</span>
+                    <input type="number" class="form-control border-start-0 shadow-none input_costo" value="0.00" min="0" step="0.01">
+                </div>
+            </td>
+            <td>
+                <input type="number" class="form-control input_ajustes shadow-none text-center input_cant" value="1" min="1">
+            </td>
+            <td class="fw-bold text-dark txt_subtotal_fila">$0.00</td>
+            <td class="text-center">
+                <i class="bi bi-trash3 text-danger cursor-pointer fs-5 btn_eliminar_fila transition-all hover-scale"></i>
+            </td>
+        `;
+
+        tr.querySelector('.input_costo').addEventListener('input', calcularTotalesCompra);
+        tr.querySelector('.input_cant').addEventListener('input', calcularTotalesCompra);
+        tr.querySelector('.btn_eliminar_fila').addEventListener('click', () => {
+            tr.remove();
+            calcularTotalesCompra();
+        });
+
+        tbodyCompra.appendChild(tr);
+    };
+
+    if (btnNuevaCompra) {
+        btnNuevaCompra.addEventListener('click', async () => {
+            await cargarProductosParaCompra();
+            await cargarProveedoresParaCompra();
+
+            document.getElementById('formCompraData').reset();
+            document.getElementById('inputFechaCompra').valueAsDate = new Date();
+            tbodyCompra.innerHTML = '';
+            crearFilaCompra();
+            calcularTotalesCompra();
+            modalCompraInstancia.show();
+        });
+    }
+
+    if (btnAgregarFila) {
+        btnAgregarFila.addEventListener('click', crearFilaCompra);
+    }
+
+    const formCompra = document.getElementById('formCompraData');
+    if (formCompra) {
+        formCompra.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            if (tbodyCompra.children.length === 0) {
+                return mostrarNotificacion("Debes agregar al menos un producto a la compra", "error");
+            }
+
+            const idProveedor = document.getElementById('selectProveedorCompra').value;
+            let fechaCompra = document.getElementById('inputFechaCompra').value;
+
+            if (!idProveedor) {
+                return mostrarNotificacion("Debes seleccionar un proveedor válido", "error");
+            }
+
+            if (!fechaCompra) {
+                fechaCompra = new Date().toISOString().split('T')[0];
+            }
+
+            const detallesCompra = [];
+            let totalCalculado = 0;
+            const filas = tbodyCompra.querySelectorAll('tr');
+
+            for (let fila of filas) {
+                const selectProd = fila.querySelector('.select_producto_compra');
+                const inputCosto = fila.querySelector('.input_costo');
+                const inputCant = fila.querySelector('.input_cant');
+
+                if (!selectProd.value) {
+                    selectProd.style.borderColor = 'red';
+                    return mostrarNotificacion("Asegúrate de seleccionar un producto en todas las filas", "error");
+                } else {
+                    selectProd.style.borderColor = '';
+                }
+
+                const costo = parseFloat(inputCosto.value) || 0;
+                const cant = parseInt(inputCant.value) || 0;
+                const subtotal = costo * cant;
+
+                totalCalculado += subtotal;
+
+                detallesCompra.push({
+                    id_producto: parseInt(selectProd.value),
+                    cantidad: cant,
+                    precio_unitario: costo,
+                    subtotal: subtotal
+                });
+            }
+
+            const payloadFinal = {
+                id_proveedor: parseInt(idProveedor),
+                fecha: fechaCompra,
+                total: totalCalculado,
+                estado: 'pendiente',
+                monto_pagado: 0.00,
+                monto_deuda: totalCalculado,
+                recibido: 0,
+                detalles: detallesCompra
+            };
+
+            try {
+                const response = await fetch('http://localhost:3000/api/compras', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payloadFinal)
+                });
+
+                if (response.ok) {
+                    mostrarNotificacion("Compra registrada exitosamente", "success");
+                    modalCompraInstancia.hide();
+
+                    cargarListaComprasGlobales();
+                } else {
+                    const data = await response.json();
+                    mostrarNotificacion(data.message || "Error al registrar la compra en la Base de Datos", "error");
+                }
+            } catch (error) {
+                console.error("Error al guardar compra:", error);
+                mostrarNotificacion("Error de conexión al servidor", "error");
+            }
+        });
+    }
+}
+
+function aplicarFiltrosCompras() {
+    const textoBusqueda = document.getElementById('inputBuscarCompra').value.toLowerCase();
+    const filtroEstado = document.getElementById('selectFiltroEstadoCompra').value;
+    const filtroProvId = document.getElementById('selectFiltroProveedorCompra').value;
+    const filtroFecha = document.getElementById('inputFiltroFechaCompra').value;
+
+    const comprasFiltradas = listaComprasData.filter(compra => {
+        // Formateamos las variables de la compra para compararlas fácil
+        const idCompStr = `COMP-${compra.id_compra.toString().padStart(3, '0')}`.toLowerCase();
+        const nombreProvStr = (compra.proveedor ? compra.proveedor.nombre : 'S/N').toLowerCase();
+        const fechaStr = new Date(compra.fecha).toISOString().split('T')[0];
+
+        // 1. Pasa filtro de Búsqueda (busca en el ID o en el nombre del proveedor)
+        const pasaTexto = idCompStr.includes(textoBusqueda) || nombreProvStr.includes(textoBusqueda);
+        
+        // 2. Pasa filtro de Estado ("Todos" o "pagado"/"pendiente")
+        const pasaEstado = filtroEstado === 'Todos' || compra.estado === filtroEstado;
+
+        // 3. Pasa filtro de Proveedor
+        const pasaProv = filtroProvId === 'Todos' || compra.id_proveedor.toString() === filtroProvId;
+
+        // 4. Pasa filtro de Fecha
+        const pasaFecha = filtroFecha === '' || fechaStr === filtroFecha;
+
+        // Si pasa los 4 obstáculos, se queda en la lista
+        return pasaTexto && pasaEstado && pasaProv && pasaFecha;
+    });
+
+    // Le mandamos la lista ya recortada al dibujante
+    renderizarTablaCompras(comprasFiltradas);
 }

@@ -74,7 +74,10 @@ create table proveedores (
     id_proveedor int auto_increment primary key,
     nombre varchar(100) not null,
     telefono varchar(20),
-    correo varchar(100)
+    correo varchar(100),
+    dias_entrega TEXT AFTER correo,
+    activo TINYINT(1) DEFAULT 1,
+    fecha_registro DATETIME DEFAULT CURRENT_TIMESTAMP;
 );
 
 -- =========================
@@ -84,6 +87,10 @@ create table compras (
     id_compra int auto_increment primary key,
     id_proveedor int,
     fecha datetime default current_timestamp,
+    estado ENUM('pagado', 'pendiente') DEFAULT 'pendiente',
+    monto_pagado DECIMAL(10,2) DEFAULT 0.00,
+    monto_deuda DECIMAL(10,2) DEFAULT 0.00,
+    recibido TINYINT(1) DEFAULT 0,
     total decimal(10,2) not null,
 
     foreign key (id_proveedor) references proveedores(id_proveedor)
@@ -94,7 +101,8 @@ create table detalle_compras (
     id_compra int not null,
     id_producto int not null,
     cantidad int not null,
-    costo decimal(10,2) not null,
+    precio_unitario decimal(10,2) not null,
+    subtotal decimal(10,2) not null,
 
     foreign key (id_compra) references compras(id_compra),
     foreign key (id_producto) references productos(id_producto)

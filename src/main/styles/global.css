@@ -1179,3 +1179,152 @@ select.boton_filtro:focus {
     background-color: var(--color-fondo-icono) !important;
     color: var(--color-primario) !important;
 }
+
+/* =========================================
+   NUEVOS ELEMENTOS DE COMPRAS (Modo Claro)
+   ========================================= */
+/* Boton Outline conectado a tu paleta dinámica */
+.btn_outline_primario {
+    color: var(--color-primario);
+    border: 1px solid var(--color-primario);
+    background-color: transparent;
+    transition: all 0.2s ease;
+}
+.btn_outline_primario:hover {
+    background-color: var(--color-primario);
+    color: #ffffff;
+}
+
+.pildora_estado.pagado {
+    background-color: #d1fae5;
+    color: #059669;
+}
+.pildora_estado.pendiente {
+    background-color: #ffedd5;
+    color: #d97706;
+}
+
+.circulo_llegada {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+.circulo_llegada.completado {
+    background-color: var(--color-primario);
+    color: #ffffff;
+}
+.circulo_llegada.vacio {
+    border: 2px solid #cbd5e1;
+    background-color: transparent;
+}
+
+.text-success_custom { color: #10b981 !important; }
+.text-danger_custom { color: #ef4444 !important; }
+
+/* =========================================================
+   🛡️ PROTECCIÓN DE MODO OSCURO PARA COMPRAS
+   ========================================================= */
+body[data-theme="dark"] .btn_outline_primario {
+    color: var(--color-primario) !important;
+    border-color: var(--color-primario) !important;
+}
+body[data-theme="dark"] .btn_outline_primario:hover {
+    background-color: var(--color-primario) !important;
+    color: #ffffff !important;
+}
+body[data-theme="dark"] .pildora_estado.pagado {
+    background-color: rgba(16, 185, 129, 0.15) !important;
+    color: #34d399 !important;
+}
+body[data-theme="dark"] .pildora_estado.pendiente {
+    background-color: rgba(245, 158, 11, 0.15) !important;
+    color: #fbbf24 !important;
+}
+body[data-theme="dark"] .circulo_llegada.vacio {
+    border-color: var(--color-borde-input) !important;
+}
+
+/* =========================================
+   MEJORAS VISUALES: MODALES Y TOASTS
+   ========================================= */
+
+/* Hacer el Toast más grande y legible */
+.toast {
+    min-width: 350px !important; /* Más ancho */
+    font-size: 1rem !important;  /* Letra un poco más grande */
+}
+
+.toast-body {
+    padding: 1rem !important;
+}
+
+/* 🌟 Efecto dinámico para los días de entrega */
+.dia_checkbox_wrapper {
+    background-color: var(--color-fondo-input);
+    border-color: var(--color-borde-input) !important;
+    color: var(--color-texto-secundario);
+    transition: all 0.2s ease-in-out;
+    user-select: none;
+}
+
+.dia_checkbox_wrapper:hover {
+    border-color: var(--color-primario) !important;
+}
+
+/* Cuando el input dentro de la caja está seleccionado (:checked) */
+.dia_checkbox_wrapper:has(input:checked) {
+    background-color: var(--color-primario) !important; /* Mismo color del usuario */
+    border-color: var(--color-primario) !important;
+    color: #ffffff !important; /* Texto blanco para contraste */
+}
+
+/* Ajuste del Modo Oscuro para los recuadros de días */
+body[data-theme="dark"] .dia_checkbox_wrapper {
+    background-color: var(--color-fondo-tarjeta);
+    border-color: var(--color-borde-input) !important;
+}
+
+body[data-theme="dark"] .dia_checkbox_wrapper:has(input:checked) {
+    background-color: var(--color-primario) !important;
+    color: #ffffff !important;
+}
+
+/* =========================================
+   ESTILOS ESPECÍFICOS DE COMPRAS
+   ========================================= */
+
+/* Efecto Hover para el basurero rojo */
+.hover-scale:hover {
+    transform: scale(1.15);
+}
+
+/* 🌟 Protección del Sticky Header en Modo Oscuro */
+body[data-theme="dark"] #tablaProductosCompra thead {
+    background-color: var(--color-fondo-tarjeta) !important;
+}
+
+/* 🌟 Ajuste de los botones "Estado de Pago" (Pagado / Pendiente) para Modo Oscuro */
+body[data-theme="dark"] .btn-outline-success {
+    color: #34d399;
+    border-color: #34d399;
+}
+body[data-theme="dark"] .btn-check:checked + .btn-outline-success {
+    background-color: #10b981;
+    color: #ffffff;
+    border-color: #10b981;
+}
+
+body[data-theme="dark"] .btn-outline-warning {
+    color: #fbbf24;
+    border-color: #fbbf24;
+}
+body[data-theme="dark"] .btn-check:checked + .btn-outline-warning {
+    background-color: #f59e0b;
+    color: #ffffff;
+    border-color: #f59e0b;
+}

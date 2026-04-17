@@ -18,6 +18,17 @@ export const Proveedor = database.define(
         },
         correo: {
             type: DataTypes.STRING(100)
+        },
+        dias_entrega: {
+            type: DataTypes.TEXT
+        },
+        activo: {
+            type: DataTypes.TINYINT(1),
+            defaultValue: 1
+        },
+        fecha_registro: {
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW
         }
     }, {
     tableName: "proveedores",

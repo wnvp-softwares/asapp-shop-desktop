@@ -53,3 +53,6 @@ PD: Se agregaron archivos "temp.txt" para evitar borrado de carpetas vacias
 
 <===================================================================>
 - 13 de abril del 2026; 08:40 pm. Se realizo avance en la funcionalidad de la ventana de Ventas y Ajustes. Ademas de algunos cambios en la BD. by Diego Fregoso
+
+<===================================================================>
+- 16 de abril del 2026; 08:40 pm. Se realizo avance en la funcionalidad de Compras, y cambios de diseño en Reportes y Ventas. Ademas de algunos cambios en la BD. by Diego Fregoso

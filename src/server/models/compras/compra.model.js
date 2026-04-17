@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
 import { database } from "../../configs/database.js";
-import { Proveedor } from "../../models/inventario/proveedor.model.js";
 
 export const Compra = database.define(
     "Compra",
@@ -16,6 +15,22 @@ export const Compra = database.define(
         fecha: {
             type: DataTypes.DATE,
             defaultValue: DataTypes.NOW
+        },
+        estado: {
+            type: DataTypes.ENUM('pagado', 'pendiente'),
+            defaultValue: 'pendiente'
+        },
+        monto_pagado: {
+            type: DataTypes.DECIMAL(10, 2),
+            defaultValue: 0.00
+        },
+        monto_deuda: {
+            type: DataTypes.DECIMAL(10, 2),
+            defaultValue: 0.00
+        },
+        recibido: {
+            type: DataTypes.TINYINT(1),
+            defaultValue: 0
         },
         total: {
             type: DataTypes.DECIMAL(10, 2),
