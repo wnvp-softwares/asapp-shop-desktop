@@ -1723,7 +1723,7 @@ async function cargarProveedoresParaCompra() {
         const res = await fetch('http://localhost:3000/api/proveedores');
         if (res.ok) {
             listaProveedoresGlobal = await res.json();
-            
+
             const selectProvModal = document.getElementById('selectProveedorCompra');
             if (selectProvModal) {
                 selectProvModal.innerHTML = '<option value="" selected disabled>Selecciona un proveedor...</option>';
@@ -1746,9 +1746,9 @@ async function cargarProveedoresParaCompra() {
 function renderizarTablaCompras(comprasParaMostrar) {
     const tbody = document.getElementById('tbodyListaCompras');
     if (!tbody) return;
-    tbody.innerHTML = ''; 
+    tbody.innerHTML = '';
 
-    if(comprasParaMostrar.length === 0) {
+    if (comprasParaMostrar.length === 0) {
         tbody.innerHTML = `<tr><td colspan="8" class="text-center text-muted py-5">No se encontraron compras con estos filtros</td></tr>`;
         return;
     }
@@ -1757,14 +1757,14 @@ function renderizarTablaCompras(comprasParaMostrar) {
         const idFormateado = `COMP-${compra.id_compra.toString().padStart(3, '0')}`;
         const fechaStr = new Date(compra.fecha).toISOString().split('T')[0];
         const nombreProv = compra.proveedor ? compra.proveedor.nombre : 'S/N';
-        
-        const esPagado = compra.estado === 'pagado'; 
+
+        const esPagado = compra.estado === 'pagado';
         const clasePildora = esPagado ? 'pagado' : 'pendiente';
         const textoPildora = esPagado ? 'PAGADO' : 'PENDIENTE';
 
-        const htmlLlegada = compra.recibido 
-            ? `<div class="circulo_llegada completado mx-auto"><i class="bi bi-check2"></i></div>`
-            : `<div class="circulo_llegada vacio mx-auto"></div>`;
+        const htmlLlegada = compra.recibido
+            ? `<div class="circulo_llegada completado mx-auto cursor-pointer" data-id="${compra.id_compra}"><i class="bi bi-check2"></i></div>`
+            : `<div class="circulo_llegada vacio mx-auto cursor-pointer" data-id="${compra.id_compra}"></div>`;
 
         const tr = document.createElement('tr');
         tr.className = 'fila_compra';
@@ -1796,10 +1796,54 @@ function configurarModuloCompras() {
     const selectProv = document.getElementById('selectFiltroProveedorCompra');
     const inputFecha = document.getElementById('inputFiltroFechaCompra');
 
-    if(inputBuscar) inputBuscar.addEventListener('input', aplicarFiltrosCompras);
-    if(selectEstado) selectEstado.addEventListener('change', aplicarFiltrosCompras);
-    if(selectProv) selectProv.addEventListener('change', aplicarFiltrosCompras);
-    if(inputFecha) inputFecha.addEventListener('change', aplicarFiltrosCompras);
+    if (inputBuscar) inputBuscar.addEventListener('input', aplicarFiltrosCompras);
+    if (selectEstado) selectEstado.addEventListener('change', aplicarFiltrosCompras);
+    if (selectProv) selectProv.addEventListener('change', aplicarFiltrosCompras);
+    if (inputFecha) inputFecha.addEventListener('change', aplicarFiltrosCompras);
+
+    const tbodyTablaPrincipal = document.getElementById('tbodyListaCompras');
+
+    if (tbodyTablaPrincipal) {
+        tbodyTablaPrincipal.addEventListener('click', (e) => {
+            const circulo = e.target.closest('.circulo_llegada');
+
+            if (circulo) {
+                const idCompra = parseInt(circulo.getAttribute('data-id'));
+
+                const compraTarget = listaComprasData.find(c => c.id_compra === idCompra);
+
+                if (compraTarget) {
+                    if (compraTarget.recibido) {
+                        mostrarNotificacion("Esta compra ya fue ingresada al inventario. No se puede revertir por seguridad.", "info");
+                    } else {
+                        mostrarModalConfirmacion(
+                            "Confirmar Recepción de Mercancía",
+                            `¿Estás seguro de marcar la compra <b>COMP-${idCompra.toString().padStart(3, '0')}</b> como recibida?<br><br>
+                             <small class="text-muted">Esto sumará los productos de esta compra a tu inventario automáticamente. Esta acción no se puede deshacer.</small>`,
+                            async () => {
+                                try {
+                                    const response = await fetch(`http://localhost:3000/api/compras/${idCompra}/recibir`, {
+                                        method: 'PUT'
+                                    });
+
+                                    if (response.ok) {
+                                        mostrarNotificacion("Mercancía recibida e inventario actualizado", "success");
+                                        cargarListaComprasGlobales();
+                                    } else {
+                                        mostrarNotificacion("Error al actualizar el estado", "error");
+                                    }
+                                } catch (error) {
+                                    mostrarNotificacion("Error de conexión con el servidor", "error");
+                                }
+                            },
+                            "Sí, confirmar llegada",
+                            "info" // Usamos el modal premium que se pinta con tu color de marca
+                        );
+                    }
+                }
+            }
+        });
+    }
 
     const btnNuevoProveedor = document.getElementById('btnNuevoProveedor');
     const formProveedor = document.getElementById('formProveedorData');
@@ -2048,27 +2092,20 @@ function aplicarFiltrosCompras() {
     const filtroFecha = document.getElementById('inputFiltroFechaCompra').value;
 
     const comprasFiltradas = listaComprasData.filter(compra => {
-        // Formateamos las variables de la compra para compararlas fácil
         const idCompStr = `COMP-${compra.id_compra.toString().padStart(3, '0')}`.toLowerCase();
         const nombreProvStr = (compra.proveedor ? compra.proveedor.nombre : 'S/N').toLowerCase();
         const fechaStr = new Date(compra.fecha).toISOString().split('T')[0];
 
-        // 1. Pasa filtro de Búsqueda (busca en el ID o en el nombre del proveedor)
         const pasaTexto = idCompStr.includes(textoBusqueda) || nombreProvStr.includes(textoBusqueda);
-        
-        // 2. Pasa filtro de Estado ("Todos" o "pagado"/"pendiente")
+
         const pasaEstado = filtroEstado === 'Todos' || compra.estado === filtroEstado;
 
-        // 3. Pasa filtro de Proveedor
         const pasaProv = filtroProvId === 'Todos' || compra.id_proveedor.toString() === filtroProvId;
 
-        // 4. Pasa filtro de Fecha
         const pasaFecha = filtroFecha === '' || fechaStr === filtroFecha;
 
-        // Si pasa los 4 obstáculos, se queda en la lista
         return pasaTexto && pasaEstado && pasaProv && pasaFecha;
     });
 
-    // Le mandamos la lista ya recortada al dibujante
     renderizarTablaCompras(comprasFiltradas);
 }

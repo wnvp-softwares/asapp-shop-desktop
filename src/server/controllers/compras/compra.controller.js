@@ -1,6 +1,7 @@
 import { Compra } from "../../models/compras/compra.model.js";
 import { DetalleCompra } from "../../models/compras/detalle_compra.model.js";
 import { Proveedor } from "../../models/inventario/proveedor.model.js";
+import { Producto } from "../../models/productos/producto.model.js";
 import { database } from "../../configs/database.js";
 
 export const getCompras = async (req, res) => {
@@ -54,5 +55,45 @@ export const createCompra = async (req, res) => {
         await t.rollback();
         console.error("Error al crear compra:", error);
         res.status(500).json({ message: "Error interno al registrar la compra" });
+    }
+};
+
+export const marcarComoRecibida = async (req, res) => {
+    const t = await database.transaction();
+
+    try {
+        const { id } = req.params;
+
+        const compra = await Compra.findByPk(id);
+
+        if (!compra) {
+            return res.status(404).json({ message: "Compra no encontrada" });
+        }
+
+        if (compra.recibido === 1 || compra.recibido === true) {
+            return res.status(400).json({ message: "La compra ya fue ingresada al inventario anteriormente" });
+        }
+
+        compra.recibido = 1;
+        await compra.save({ transaction: t });
+
+        const detalles = await DetalleCompra.findAll({ where: { id_compra: id } });
+
+        for (let detalle of detalles) {
+            const producto = await Producto.findByPk(detalle.id_producto);
+            
+            if (producto) {
+                producto.stock = (producto.stock || 0) + detalle.cantidad;
+                await producto.save({ transaction: t });
+            }
+        }
+
+        await t.commit();
+        res.json({ message: "Compra recibida e inventario actualizado correctamente" });
+
+    } catch (error) {
+        await t.rollback();
+        console.error("Error al procesar la llegada de la compra:", error);
+        res.status(500).json({ message: "Error interno al actualizar el inventario" });
     }
 };
